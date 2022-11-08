@@ -1,8 +1,7 @@
 # HighlightView
 [![](https://jitpack.io/v/FlyJingFish/HighlightView.svg)](https://jitpack.io/#FlyJingFish/HighlightView)
 
-## 支持高亮动画的 TextView 和 ImageView
-
+## 支持高亮灯光移动效果的 TextView 和 ImageView
 
 <img src="https://github.com/FlyJingFish/HighlightView/blob/master/screenshot/screenrecording-20221108-150736.gif" width="405px" height="842px" alt="show" />
 
