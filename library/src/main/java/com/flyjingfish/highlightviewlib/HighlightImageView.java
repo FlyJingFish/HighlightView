@@ -203,12 +203,20 @@ public class HighlightImageView extends AppCompatImageView {
         mDuration = duration;
     }
 
+    public long getDuration() {
+        return mDuration;
+    }
+
     public void setInterpolator(TimeInterpolator value) {
         if (value != null) {
             mInterpolator = value;
         } else {
             mInterpolator = new LinearInterpolator();
         }
+    }
+
+    public TimeInterpolator getInterpolator() {
+        return mInterpolator;
     }
 
     public void setRepeatCount(int value) {

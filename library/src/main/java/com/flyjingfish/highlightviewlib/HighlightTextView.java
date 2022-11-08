@@ -244,6 +244,9 @@ public class HighlightTextView extends AppCompatTextView {
     public void setDuration(long duration) {
         mDuration = duration;
     }
+    public long getDuration() {
+        return mDuration;
+    }
 
     public void setInterpolator(TimeInterpolator value) {
         if (value != null) {
@@ -251,6 +254,10 @@ public class HighlightTextView extends AppCompatTextView {
         } else {
             mInterpolator = new LinearInterpolator();
         }
+    }
+
+    public TimeInterpolator getInterpolator() {
+        return mInterpolator;
     }
 
     public void setRepeatCount(int value) {
