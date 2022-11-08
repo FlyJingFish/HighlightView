@@ -1,0 +1,3 @@
+rootProject.name = "HighlightView"
+include ':app'
+include ':library'

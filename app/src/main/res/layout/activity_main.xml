@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <com.flyjingfish.highlightviewlib.HighlightTextView
+        android:id="@+id/highlightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Hello World! "
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        app:highlight_text_highlightWidth="40dp"
+        app:highlight_text_highlightColor="#E6ffffff"
+        app:highlight_text_autoStart="true"
+        app:highlight_text_duration="2500"
+        app:highlight_text_repeatCount="-1"
+        app:highlight_text_repeatMode="restart"
+        app:highlight_text_highlightRotateDegrees="30"
+        app:highlight_text_startDirection="start_left"
+        android:textSize="30sp"/>
+    <com.flyjingfish.highlightviewlib.HighlightImageView
+        android:id="@+id/highlightImageView"
+        android:layout_width="154dp"
+        android:layout_height="64dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/e_bank"
+        app:highlight_image_highlightWidth="30dp"
+        app:highlight_image_highlightColor="#b3ffffff"
+        app:highlight_image_autoStart="true"
+        app:highlight_image_duration="2500"
+        app:highlight_image_repeatCount="-1"
+        app:highlight_image_repeatMode="restart"
+        app:highlight_image_highlightRotateDegrees="30"
+        app:highlight_image_startDirection="start_left"
+        android:layout_marginTop="10dp"/>
+
+    <com.flyjingfish.highlightviewlib.HighlightImageView
+        android:id="@+id/highlightImageView2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/camera"
+        app:highlight_image_highlightWidth="40dp"
+        app:highlight_image_highlightColor="#E6ffffff"
+        app:highlight_image_autoStart="true"
+        app:highlight_image_duration="2500"
+        app:highlight_image_repeatCount="-1"
+        app:highlight_image_repeatMode="restart"
+        app:highlight_image_highlightRotateDegrees="30"
+        app:highlight_image_startDirection="start_left"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>
