@@ -17,3 +17,8 @@ local.properties
 # Project exclude paths
 /library/build/
 /library/build/intermediates/javac/debug/classes/
+
+build/
+.idea
+androidTest/
+test/
