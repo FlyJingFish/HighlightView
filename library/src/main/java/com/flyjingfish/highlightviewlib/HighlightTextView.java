@@ -317,7 +317,6 @@ public class HighlightTextView extends AppCompatTextView {
             mImagePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
             canvas.saveLayer(new RectF(left, top, right, bottom), mImagePaint, Canvas.ALL_SAVE_FLAG);
             canvas.rotate(-highlightRotateDegrees,getWidth()/2,getHeight()/2);
-//            getPaint().setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
             super.onDraw(canvas);
 
         }
