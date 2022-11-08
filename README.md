@@ -1,5 +1,5 @@
 # HighlightView
-## 镂空TextView，支持渐变色粗边，支持设置背景
+## 高亮动画TextView和ImageView
 
 [![](https://jitpack.io/v/FlyJingFish/HighlightView.svg)](https://jitpack.io/#FlyJingFish/HighlightView)
 
@@ -21,7 +21,7 @@
 
 ```gradle
     dependencies {
-        implementation 'com.github.FlyJingFish:HighlightView:1.0.0'
+        implementation 'com.github.FlyJingFish:HighlightView:1.0'
     }
 ```
 ## 第三步，使用说明
