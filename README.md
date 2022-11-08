@@ -44,7 +44,7 @@
     app:highlight_text_repeatCount="-1"
     app:highlight_text_repeatMode="restart"
     app:highlight_text_highlightRotateDegrees="30"
-    app:highlight_text_startDirection="start_left"
+    app:highlight_text_startDirection="from_left"
     android:textSize="30sp"/>
 ```
 
@@ -65,7 +65,7 @@
     app:highlight_image_repeatCount="-1"
     app:highlight_image_repeatMode="restart"
     app:highlight_image_highlightRotateDegrees="30"
-    app:highlight_image_startDirection="start_left"
+    app:highlight_image_startDirection="from_left"
     android:layout_marginTop="10dp"/>
 ```
 

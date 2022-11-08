@@ -48,10 +48,10 @@ public class HighlightImageView extends AppCompatImageView {
     public static final int INFINITE = ValueAnimator.INFINITE;
     public static final int RESTART = ValueAnimator.RESTART;
     public static final int REVERSE = ValueAnimator.REVERSE;
-    public static final int START_LEFT = 1;
-    public static final int START_RIGHT = 2;
-    public static final int START_TOP = 3;
-    public static final int START_BOTTOM = 4;
+    public static final int FROM_LEFT = 1;
+    public static final int FROM_RIGHT = 2;
+    public static final int FROM_TOP = 3;
+    public static final int FROM_BOTTOM = 4;
     private long mDuration;
 
     public HighlightImageView(@NonNull Context context) {
@@ -72,7 +72,7 @@ public class HighlightImageView extends AppCompatImageView {
         int repeatMode = a.getInt(R.styleable.HighlightImageView_highlight_image_repeatMode,RESTART);
         float highlightWidth = a.getDimension(R.styleable.HighlightImageView_highlight_image_highlightWidth,10);
         float highlightRotateDegrees = a.getFloat(R.styleable.HighlightImageView_highlight_image_highlightRotateDegrees,30);
-        int startDirection = a.getColor(R.styleable.HighlightImageView_highlight_image_startDirection,START_LEFT);
+        int startDirection = a.getColor(R.styleable.HighlightImageView_highlight_image_startDirection,FROM_LEFT);
         boolean autoStart = a.getBoolean(R.styleable.HighlightImageView_highlight_image_autoStart,false);
         a.recycle();
 
@@ -95,7 +95,7 @@ public class HighlightImageView extends AppCompatImageView {
     @Retention(RetentionPolicy.SOURCE)
     public @interface RepeatMode {}
 
-    @IntDef({START_LEFT, START_RIGHT,START_TOP, START_BOTTOM})
+    @IntDef({FROM_LEFT, FROM_RIGHT,FROM_TOP, FROM_BOTTOM})
     @Retention(RetentionPolicy.SOURCE)
     public @interface StartDirection {}
 
@@ -183,11 +183,11 @@ public class HighlightImageView extends AppCompatImageView {
         }else {
             mHighlightEffectAnim.cancel();
         }
-        if (mFrontImageView.getStartDirection() == START_RIGHT){
+        if (mFrontImageView.getStartDirection() == FROM_RIGHT){
             mHighlightEffectAnim.setFloatValues(viewWidth+ mFrontImageView.getHighlightWidth(),-mFrontImageView.getHighlightWidth());
-        }else if (mFrontImageView.getStartDirection() == START_TOP){
+        }else if (mFrontImageView.getStartDirection() == FROM_TOP){
             mHighlightEffectAnim.setFloatValues(-mFrontImageView.getHighlightWidth(), viewHeight+ mFrontImageView.getHighlightWidth());
-        }else if (mFrontImageView.getStartDirection() == START_BOTTOM){
+        }else if (mFrontImageView.getStartDirection() == FROM_BOTTOM){
             mHighlightEffectAnim.setFloatValues(viewHeight+ mFrontImageView.getHighlightWidth(),-mFrontImageView.getHighlightWidth());
         }else {
             mHighlightEffectAnim.setFloatValues(-mFrontImageView.getHighlightWidth(), viewWidth+ mFrontImageView.getHighlightWidth());
@@ -259,7 +259,7 @@ public class HighlightImageView extends AppCompatImageView {
         private float highlightRotateDegrees = 0;
         private int highlightColor;
         private int highlightEndColor;
-        private int mStartDirection = START_LEFT;
+        private int mStartDirection = FROM_LEFT;
 
         public HighlightFrontImageView(@NonNull Context context) {
             this(context, null);
@@ -292,7 +292,7 @@ public class HighlightImageView extends AppCompatImageView {
 
             mImagePaint.setXfermode(null);
             canvas.saveLayer(new RectF(left, top, right, bottom), mImagePaint, Canvas.ALL_SAVE_FLAG);
-            if (mStartDirection == START_TOP||mStartDirection == START_BOTTOM){
+            if (mStartDirection == FROM_TOP||mStartDirection == FROM_BOTTOM){
                 LinearGradient linearGradient =
                         new LinearGradient(0, startHighlightOffset, 0, startHighlightOffset + highlightWidth,
                                 new int[]{highlightEndColor, highlightColor,highlightColor, highlightEndColor},

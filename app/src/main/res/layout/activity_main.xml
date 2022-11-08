@@ -18,14 +18,14 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_marginTop="10dp"
-        app:highlight_text_highlightWidth="40dp"
+        app:highlight_text_highlightWidth="60dp"
         app:highlight_text_highlightColor="#E6ffffff"
         app:highlight_text_autoStart="true"
         app:highlight_text_duration="2500"
         app:highlight_text_repeatCount="-1"
         app:highlight_text_repeatMode="restart"
         app:highlight_text_highlightRotateDegrees="30"
-        app:highlight_text_startDirection="start_left"
+        app:highlight_text_startDirection="from_left"
         android:textSize="30sp"/>
     <com.flyjingfish.highlightviewlib.HighlightImageView
         android:id="@+id/highlightImageView"
@@ -39,8 +39,8 @@
         app:highlight_image_duration="2500"
         app:highlight_image_repeatCount="-1"
         app:highlight_image_repeatMode="restart"
-        app:highlight_image_highlightRotateDegrees="30"
-        app:highlight_image_startDirection="start_left"
+        app:highlight_text_highlightRotateDegrees="80"
+        app:highlight_text_startDirection="from_left"
         android:layout_marginTop="10dp"/>
 
     <com.flyjingfish.highlightviewlib.HighlightImageView
@@ -55,8 +55,8 @@
         app:highlight_image_duration="2500"
         app:highlight_image_repeatCount="-1"
         app:highlight_image_repeatMode="restart"
-        app:highlight_image_highlightRotateDegrees="30"
-        app:highlight_image_startDirection="start_left"
+        app:highlight_text_highlightRotateDegrees="80"
+        app:highlight_text_startDirection="from_left"
         android:layout_marginTop="10dp"/>
 
 </LinearLayout>

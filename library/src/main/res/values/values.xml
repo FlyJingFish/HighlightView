@@ -11,10 +11,10 @@
             <enum name="reverse" value="2" />
         </attr>
         <attr name="highlight_image_startDirection" format="enum" >
-            <enum name="start_left" value="1" />
-            <enum name="start_right" value="2" />
-            <enum name="start_top" value="3" />
-            <enum name="start_bottom" value="4" />
+            <enum name="from_left" value="1" />
+            <enum name="from_right" value="2" />
+            <enum name="from_top" value="3" />
+            <enum name="from_bottom" value="4" />
         </attr>
         <attr name="highlight_image_autoStart" format="boolean" />
     </declare-styleable>
@@ -30,10 +30,10 @@
             <enum name="reverse" value="2" />
         </attr>
         <attr name="highlight_text_startDirection" format="enum" >
-            <enum name="start_left" value="1" />
-            <enum name="start_right" value="2" />
-            <enum name="start_top" value="3" />
-            <enum name="start_bottom" value="4" />
+            <enum name="from_left" value="1" />
+            <enum name="from_right" value="2" />
+            <enum name="from_top" value="3" />
+            <enum name="from_bottom" value="4" />
         </attr>
         <attr name="highlight_text_autoStart" format="boolean" />
     </declare-styleable>
