@@ -73,7 +73,7 @@
 
 | attr                                   |     format      | description |
 |----------------------------------------|:---------------:|:-----------:|
-| highlight_image_highlightColor         | reference/color |    高亮颜色     |
+| highlight_image_highlightColor         | reference/color |  高亮中心区域颜色   |
 | highlight_image_duration               |     integer     |    动画时间     |
 | highlight_image_repeatCount            |     integer     |   动画循环时间    |
 | highlight_image_highlightWidth         |    dimension    |   高亮区域宽度    |
@@ -86,7 +86,7 @@
 
 | attr                                  |     format      | description |
 |---------------------------------------|:---------------:|:-----------:|
-| highlight_text_highlightColor         | reference/color |    高亮颜色     |
+| highlight_text_highlightColor         | reference/color |  高亮中心区域颜色   |
 | highlight_text_duration               |     integer     |    动画时间     |
 | highlight_text_repeatCount            |     integer     |   动画循环时间    |
 | highlight_text_highlightWidth         |    dimension    |   高亮区域宽度    |
