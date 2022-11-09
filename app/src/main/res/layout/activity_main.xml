@@ -15,32 +15,34 @@
         android:layout_height="wrap_content"
         android:text=" Hello World! "
         android:gravity="center"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         android:textColor="@color/black"
         android:layout_marginTop="10dp"
-        app:highlight_text_highlightWidth="60dp"
-        app:highlight_text_highlightColor="#E6ffffff"
-        app:highlight_text_autoStart="true"
-        app:highlight_text_duration="2500"
-        app:highlight_text_repeatCount="-1"
-        app:highlight_text_repeatMode="restart"
-        app:highlight_text_highlightRotateDegrees="30"
-        app:highlight_text_startDirection="from_left"
-        android:textSize="30sp"/>
+        app:highlight_view_highlightWidth="120dp"
+        app:highlight_view_highlightColor="#E6ffffff"
+        app:highlight_view_autoStart="true"
+        app:highlight_view_duration="6500"
+        app:highlight_view_repeatCount="-1"
+        app:highlight_view_repeatMode="restart"
+        app:highlight_view_highlightRotateDegrees="30"
+        app:highlight_view_startDirection="from_left"
+        android:textSize="60sp"/>
+
+
     <com.flyjingfish.highlightviewlib.HighlightImageView
         android:id="@+id/highlightImageView"
         android:layout_width="154dp"
         android:layout_height="64dp"
         android:scaleType="fitXY"
         android:src="@mipmap/e_bank"
-        app:highlight_image_highlightWidth="30dp"
-        app:highlight_image_highlightColor="#b3ffffff"
-        app:highlight_image_autoStart="true"
-        app:highlight_image_duration="2500"
-        app:highlight_image_repeatCount="-1"
-        app:highlight_image_repeatMode="restart"
-        app:highlight_text_highlightRotateDegrees="80"
-        app:highlight_text_startDirection="from_left"
+        app:highlight_view_highlightWidth="30dp"
+        app:highlight_view_highlightColor="#b3ffffff"
+        app:highlight_view_autoStart="true"
+        app:highlight_view_duration="2500"
+        app:highlight_view_repeatCount="-1"
+        app:highlight_view_repeatMode="restart"
+        app:highlight_view_highlightRotateDegrees="30"
+        app:highlight_view_startDirection="from_left"
         android:layout_marginTop="10dp"/>
 
     <com.flyjingfish.highlightviewlib.HighlightImageView
@@ -49,38 +51,71 @@
         android:layout_height="60dp"
         android:scaleType="fitXY"
         android:src="@mipmap/camera"
-        app:highlight_image_highlightWidth="40dp"
-        app:highlight_image_highlightColor="#E6ffffff"
-        app:highlight_image_autoStart="true"
-        app:highlight_image_duration="2500"
-        app:highlight_image_repeatCount="-1"
-        app:highlight_image_repeatMode="restart"
-        app:highlight_text_highlightRotateDegrees="80"
-        app:highlight_text_startDirection="from_left"
+        app:highlight_view_highlightWidth="40dp"
+        app:highlight_view_highlightColor="#E6ffffff"
+        app:highlight_view_autoStart="true"
+        app:highlight_view_duration="2500"
+        app:highlight_view_repeatCount="-1"
+        app:highlight_view_repeatMode="restart"
+        app:highlight_view_highlightRotateDegrees="30"
+        app:highlight_view_startDirection="from_left"
         android:layout_marginTop="10dp"/>
 
-    <com.flyjingfish.highlightviewlib.HighlightLayout
+    <com.flyjingfish.highlightviewlib.HighlightLinearLayout
+        android:id="@+id/highlightLinearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        app:highlight_image_highlightWidth="40dp"
-        app:highlight_image_highlightColor="#E6ffffff"
-        app:highlight_image_autoStart="true"
-        app:highlight_image_duration="2500"
-        app:highlight_image_repeatCount="-1"
-        app:highlight_image_repeatMode="restart"
-        app:highlight_text_highlightRotateDegrees="80"
-        app:highlight_text_startDirection="from_left">
+        app:highlight_view_highlightWidth="40dp"
+        app:highlight_view_highlightColor="#E6ffffff"
+        app:highlight_view_autoStart="true"
+        app:highlight_view_duration="2500"
+        app:highlight_view_repeatCount="-1"
+        app:highlight_view_repeatMode="restart"
+        app:highlight_view_highlightRotateDegrees="30"
+        app:highlight_view_startDirection="from_left">
         <ImageView
-            android:layout_width="154dp"
-            android:layout_height="64dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:scaleType="fitXY"
-            android:src="@mipmap/e_bank"
+            android:src="@mipmap/camera"
             android:layout_marginTop="10dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text=" Hello World! "
+            android:gravity="center"
+            android:textStyle="bold|italic"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:textSize="30sp"/>
+
+    </com.flyjingfish.highlightviewlib.HighlightLinearLayout>
+
+    <com.flyjingfish.highlightviewlib.HighlightRelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:highlight_view_highlightWidth="40dp"
+        app:highlight_view_highlightColor="#E6ffffff"
+        app:highlight_view_autoStart="true"
+        app:highlight_view_duration="2500"
+        app:highlight_view_repeatCount="-1"
+        app:highlight_view_repeatMode="restart"
+        app:highlight_view_highlightRotateDegrees="30"
+        app:highlight_view_startDirection="from_left">
+        <ImageView
+            android:id="@+id/iv1"
+            android:layout_width="154dp"
+            android:layout_height="64dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/e_bank"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv1"
             android:text=" Hello World! "
             android:gravity="center"
             android:textStyle="bold"
@@ -88,6 +123,38 @@
             android:layout_marginTop="10dp"
             android:textSize="30sp"/>
 
-    </com.flyjingfish.highlightviewlib.HighlightLayout>
+    </com.flyjingfish.highlightviewlib.HighlightRelativeLayout>
+
+    <com.flyjingfish.highlightviewlib.HighlightFrameLayout
+        android:id="@+id/highlightFrameLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:highlight_view_highlightWidth="40dp"
+        app:highlight_view_highlightColor="#E6ffffff"
+        app:highlight_view_autoStart="true"
+        app:highlight_view_duration="2500"
+        app:highlight_view_repeatCount="-1"
+        app:highlight_view_repeatMode="restart"
+        app:highlight_view_highlightRotateDegrees="30"
+        app:highlight_view_startDirection="from_left">
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/camera"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv1"
+            android:text=" Hello World! "
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="70dp"
+            android:textSize="30sp"/>
+
+    </com.flyjingfish.highlightviewlib.HighlightFrameLayout>
 
 </LinearLayout>

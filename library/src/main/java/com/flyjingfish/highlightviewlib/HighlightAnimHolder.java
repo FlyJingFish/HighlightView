@@ -24,8 +24,8 @@ public class HighlightAnimHolder {
     public static final int FROM_RIGHT = 2;
     public static final int FROM_TOP = 3;
     public static final int FROM_BOTTOM = 4;
-    private final HighlightDrawView highlightDrawView;
-    private final HighlightView highlightView;
+    private final HighlightDrawView mHighlightDrawView;
+    private final HighlightView mHighlightView;
     private int mRepeatCount = 0;
     private int mRepeatMode = ValueAnimator.RESTART;
     private TimeInterpolator mInterpolator = new DecelerateInterpolator();
@@ -35,8 +35,8 @@ public class HighlightAnimHolder {
     private boolean isStartBeforeLayout;
 
     public HighlightAnimHolder(HighlightDrawView highlightDrawView,HighlightView highlightView) {
-        this.highlightDrawView = highlightDrawView;
-        this.highlightView = highlightView;
+        this.mHighlightDrawView = highlightDrawView;
+        this.mHighlightView = highlightView;
     }
 
     @IntDef({RESTART, REVERSE})
@@ -72,20 +72,20 @@ public class HighlightAnimHolder {
     };
 
     private int getWidth(){
-        return highlightView.thisView().getWidth();
+        return mHighlightView.thisView().getWidth();
     }
 
     private int getHeight(){
-        return highlightView.thisView().getHeight();
+        return mHighlightView.thisView().getHeight();
     }
 
     public float getStartHighlightOffset() {
-        return highlightDrawView.getHighlightDraw().getStartHighlightOffset();
+        return mHighlightDrawView.getHighlightDraw().getStartHighlightOffset();
     }
 
     public void setStartHighlightOffset(float startHighlightOffset) {
-        highlightDrawView.getHighlightDraw().getStartHighlightOffset(startHighlightOffset);
-        highlightView.thisView().invalidate();
+        mHighlightDrawView.getHighlightDraw().getStartHighlightOffset(startHighlightOffset);
+        mHighlightView.thisView().invalidate();
     }
 
     public void startHighlightEffect() {
@@ -131,21 +131,21 @@ public class HighlightAnimHolder {
 
 
     public float getHighlightRotateDegrees() {
-        return highlightDrawView.getHighlightDraw().getHighlightRotateDegrees();
+        return mHighlightDrawView.getHighlightDraw().getHighlightRotateDegrees();
     }
 
     public void setHighlightRotateDegrees(float rotateDegrees) {
-        highlightDrawView.getHighlightDraw().setHighlightRotateDegrees(rotateDegrees);
-        highlightView.thisView().invalidate();
+        mHighlightDrawView.getHighlightDraw().setHighlightRotateDegrees(rotateDegrees);
+        mHighlightView.thisView().invalidate();
     }
 
     public float getHighlightWidth() {
-        return highlightDrawView.getHighlightDraw().getHighlightWidth();
+        return mHighlightDrawView.getHighlightDraw().getHighlightWidth();
     }
 
     public void setHighlightWidth(float highlightWidth) {
-        highlightDrawView.getHighlightDraw().setHighlightWidth(highlightWidth);
-        highlightView.thisView().invalidate();
+        mHighlightDrawView.getHighlightDraw().setHighlightWidth(highlightWidth);
+        mHighlightView.thisView().invalidate();
     }
 
 
@@ -187,20 +187,20 @@ public class HighlightAnimHolder {
     }
 
     public int getStartDirection() {
-        return highlightDrawView.getHighlightDraw().getStartDirection();
+        return mHighlightDrawView.getHighlightDraw().getStartDirection();
     }
 
     public void setStartDirection(@HighlightAnimHolder.StartDirection int startDirection) {
-        highlightDrawView.getHighlightDraw().setStartDirection(startDirection);
+        mHighlightDrawView.getHighlightDraw().setStartDirection(startDirection);
     }
 
     @ColorInt
     public int getHighlightColor() {
-        return highlightDrawView.getHighlightDraw().getHighlightColor();
+        return mHighlightDrawView.getHighlightDraw().getHighlightColor();
     }
 
     public void setHighlightColor(@ColorInt int highlightColor) {
-        highlightDrawView.getHighlightDraw().setHighlightColor(highlightColor);
+        mHighlightDrawView.getHighlightDraw().setHighlightColor(highlightColor);
     }
 
     protected boolean isFinishLayout() {

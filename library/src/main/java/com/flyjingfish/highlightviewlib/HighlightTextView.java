@@ -33,15 +33,15 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
     public HighlightTextView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mFrontTextView = new HighlightFrontTextView(context, attrs, defStyleAttr);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HighlightTextView);
-        int highlightColor = a.getColor(R.styleable.HighlightTextView_highlight_text_highlightColor,Color.TRANSPARENT);
-        long duration = a.getInteger(R.styleable.HighlightTextView_highlight_text_duration,1000);
-        int repeatCount = a.getInteger(R.styleable.HighlightTextView_highlight_text_repeatCount,0);
-        int repeatMode = a.getInt(R.styleable.HighlightTextView_highlight_text_repeatMode,RESTART);
-        float highlightWidth = a.getDimension(R.styleable.HighlightTextView_highlight_text_highlightWidth,10);
-        float highlightRotateDegrees = a.getFloat(R.styleable.HighlightTextView_highlight_text_highlightRotateDegrees,30);
-        int startDirection = a.getColor(R.styleable.HighlightTextView_highlight_text_startDirection,FROM_LEFT);
-        boolean autoStart = a.getBoolean(R.styleable.HighlightTextView_highlight_text_autoStart,false);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HighlightAnimView);
+        int highlightColor = a.getColor(R.styleable.HighlightAnimView_highlight_view_highlightColor,Color.TRANSPARENT);
+        long duration = a.getInteger(R.styleable.HighlightAnimView_highlight_view_duration,1000);
+        int repeatCount = a.getInteger(R.styleable.HighlightAnimView_highlight_view_repeatCount,0);
+        int repeatMode = a.getInt(R.styleable.HighlightAnimView_highlight_view_repeatMode,RESTART);
+        float highlightWidth = a.getDimension(R.styleable.HighlightAnimView_highlight_view_highlightWidth,10);
+        float highlightRotateDegrees = a.getFloat(R.styleable.HighlightAnimView_highlight_view_highlightRotateDegrees,30);
+        int startDirection = a.getColor(R.styleable.HighlightAnimView_highlight_view_startDirection,FROM_LEFT);
+        boolean autoStart = a.getBoolean(R.styleable.HighlightAnimView_highlight_view_autoStart,false);
         a.recycle();
 
         mHighlightAnimHolder = new HighlightAnimHolder(mFrontTextView,this);
@@ -71,16 +71,34 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
         return mHighlightAnimHolder;
     }
 
+//    @Override
+//    protected void onDraw(Canvas canvas) {
+//        getPaint().setXfermode(null);
+//        super.onDraw(canvas);
+//
+//        getPaint().setXfermode(null);
+//        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(),  canvas.getHeight()),  getPaint(), Canvas.ALL_SAVE_FLAG);
+//        super.onDraw(canvas);
+//        getPaint().setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+//        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(),  canvas.getHeight()),  getPaint(), Canvas.ALL_SAVE_FLAG);
+//        mFrontTextView.draw(canvas);
+//    }
+
+
     @Override
     protected void onDraw(Canvas canvas) {
         getPaint().setXfermode(null);
+        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(),  canvas.getHeight()),  getPaint(), Canvas.ALL_SAVE_FLAG);
         super.onDraw(canvas);
+
+
+        getPaint().setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(),  canvas.getHeight()), getPaint(), Canvas.ALL_SAVE_FLAG);
+        canvas.drawRect(0, 0, canvas.getWidth(),  canvas.getHeight(), getPaint());
 
         getPaint().setXfermode(null);
         canvas.saveLayer(new RectF(0, 0, canvas.getWidth(),  canvas.getHeight()),  getPaint(), Canvas.ALL_SAVE_FLAG);
         super.onDraw(canvas);
-        getPaint().setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(),  canvas.getHeight()),  getPaint(), Canvas.ALL_SAVE_FLAG);
         mFrontTextView.draw(canvas);
     }
 

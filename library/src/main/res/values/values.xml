@@ -1,40 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="HighlightImageView"  >
-        <attr name="highlight_image_highlightColor" format="reference|color" />
-        <attr name="highlight_image_duration" format="integer" />
-        <attr name="highlight_image_repeatCount" format="integer" />
-        <attr name="highlight_image_highlightWidth" format="dimension" />
-        <attr name="highlight_image_highlightRotateDegrees" format="float" />
-        <attr name="highlight_image_repeatMode" format="enum" >
+    <declare-styleable name="HighlightAnimView"  >
+        <attr name="highlight_view_highlightColor" format="reference|color" />
+        <attr name="highlight_view_duration" format="integer" />
+        <attr name="highlight_view_repeatCount" format="integer" />
+        <attr name="highlight_view_highlightWidth" format="dimension" />
+        <attr name="highlight_view_highlightRotateDegrees" format="float" />
+        <attr name="highlight_view_repeatMode" format="enum" >
             <enum name="restart" value="1" />
             <enum name="reverse" value="2" />
         </attr>
-        <attr name="highlight_image_startDirection" format="enum" >
+        <attr name="highlight_view_startDirection" format="enum" >
             <enum name="from_left" value="1" />
             <enum name="from_right" value="2" />
             <enum name="from_top" value="3" />
             <enum name="from_bottom" value="4" />
         </attr>
-        <attr name="highlight_image_autoStart" format="boolean" />
-    </declare-styleable>
-
-    <declare-styleable name="HighlightTextView"  >
-        <attr name="highlight_text_highlightColor" format="reference|color" />
-        <attr name="highlight_text_duration" format="integer" />
-        <attr name="highlight_text_repeatCount" format="integer" />
-        <attr name="highlight_text_highlightWidth" format="dimension" />
-        <attr name="highlight_text_highlightRotateDegrees" format="float" />
-        <attr name="highlight_text_repeatMode" format="enum" >
-            <enum name="restart" value="1" />
-            <enum name="reverse" value="2" />
-        </attr>
-        <attr name="highlight_text_startDirection" format="enum" >
-            <enum name="from_left" value="1" />
-            <enum name="from_right" value="2" />
-            <enum name="from_top" value="3" />
-            <enum name="from_bottom" value="4" />
-        </attr>
-        <attr name="highlight_text_autoStart" format="boolean" />
+        <attr name="highlight_view_autoStart" format="boolean" />
     </declare-styleable>
 </resources>

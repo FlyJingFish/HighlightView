@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
+import com.flyjingfish.highlightviewlib.HighlightFrameLayout;
+import com.flyjingfish.highlightviewlib.HighlightLinearLayout;
 import com.flyjingfish.highlightviewlib.HighlightTextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,10 +17,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         HighlightTextView highlightTextView = findViewById(R.id.highlightTextView);
+        HighlightFrameLayout highlightFrameLayout = findViewById(R.id.highlightFrameLayout);
+        HighlightLinearLayout highlightLinearLayout = findViewById(R.id.highlightLinearLayout);
         highlightTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                highlightTextView.setText("1111");
+                highlightTextView.getHighlightAnimHolder().stopHighlightEffect();
+
+            }
+        });
+
+        highlightFrameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                highlightLinearLayout.getHighlightAnimHolder().stopHighlightEffect();
+                highlightFrameLayout.getHighlightAnimHolder().stopHighlightEffect();
             }
         });
 

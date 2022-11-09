@@ -36,15 +36,15 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
     public HighlightImageView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mFrontImageView = new HighlightFrontImageView(context, attrs, defStyleAttr);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HighlightImageView);
-        int highlightColor = a.getColor(R.styleable.HighlightImageView_highlight_image_highlightColor,Color.TRANSPARENT);
-        long duration = a.getInteger(R.styleable.HighlightImageView_highlight_image_duration,1000);
-        int repeatCount = a.getInteger(R.styleable.HighlightImageView_highlight_image_repeatCount,0);
-        int repeatMode = a.getInt(R.styleable.HighlightImageView_highlight_image_repeatMode,RESTART);
-        float highlightWidth = a.getDimension(R.styleable.HighlightImageView_highlight_image_highlightWidth,10);
-        float highlightRotateDegrees = a.getFloat(R.styleable.HighlightImageView_highlight_image_highlightRotateDegrees,30);
-        int startDirection = a.getColor(R.styleable.HighlightImageView_highlight_image_startDirection,FROM_LEFT);
-        boolean autoStart = a.getBoolean(R.styleable.HighlightImageView_highlight_image_autoStart,false);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HighlightAnimView);
+        int highlightColor = a.getColor(R.styleable.HighlightAnimView_highlight_view_highlightColor,Color.TRANSPARENT);
+        long duration = a.getInteger(R.styleable.HighlightAnimView_highlight_view_duration,1000);
+        int repeatCount = a.getInteger(R.styleable.HighlightAnimView_highlight_view_repeatCount,0);
+        int repeatMode = a.getInt(R.styleable.HighlightAnimView_highlight_view_repeatMode,RESTART);
+        float highlightWidth = a.getDimension(R.styleable.HighlightAnimView_highlight_view_highlightWidth,10);
+        float highlightRotateDegrees = a.getFloat(R.styleable.HighlightAnimView_highlight_view_highlightRotateDegrees,30);
+        int startDirection = a.getColor(R.styleable.HighlightAnimView_highlight_view_startDirection,FROM_LEFT);
+        boolean autoStart = a.getBoolean(R.styleable.HighlightAnimView_highlight_view_autoStart,false);
         a.recycle();
 
         mHighlightAnimHolder = new HighlightAnimHolder(mFrontImageView,this);
