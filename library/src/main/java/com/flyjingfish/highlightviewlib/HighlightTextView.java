@@ -207,10 +207,8 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
             return;
         }
         Drawable[] drawablesRelative = getCompoundDrawablesRelative();
-//        Log.e("drawablesRelative----",(drawablesRelative[0] == null)+"-"+(drawablesRelative[1] == null)+"-"+(drawablesRelative[2] == null)+"-"+(drawablesRelative[3] == null));
 
         Drawable[] drawables = getCompoundDrawables();
-//        Log.e("drawables----",(drawables[0] == null)+"-"+(drawables[1] == null)+"-"+(drawables[2] == null)+"-"+(drawables[3] == null));
 
         Drawable drawableLeft;
         Drawable drawableRight;
