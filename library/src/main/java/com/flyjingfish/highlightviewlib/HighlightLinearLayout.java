@@ -104,10 +104,6 @@ public class HighlightLinearLayout extends LinearLayout implements HighlightView
         }
     }
 
-    @Override
-    public View getView() {
-        return this;
-    }
 
     @Override
     public HighlightDraw getHighlightDraw() {

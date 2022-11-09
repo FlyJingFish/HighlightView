@@ -127,7 +127,7 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
         }
 
         @Override
-        public View getView() {
+        public View thisView() {
             return this;
         }
 

@@ -38,11 +38,11 @@ class HighlightDraw {
     }
 
     private int getWidth(){
-        return highlightDrawView.getView().getWidth();
+        return highlightDrawView.thisView().getWidth();
     }
 
     private int getHeight(){
-        return highlightDrawView.getView().getHeight();
+        return highlightDrawView.thisView().getHeight();
     }
 
     @SuppressLint("DrawAllocation")

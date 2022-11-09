@@ -119,11 +119,6 @@ public class HighlightRelativeLayout extends RelativeLayout implements Highlight
     }
 
     @Override
-    public View getView() {
-        return this;
-    }
-
-    @Override
     public HighlightDraw getHighlightDraw() {
         return mHighlightDraw;
     }

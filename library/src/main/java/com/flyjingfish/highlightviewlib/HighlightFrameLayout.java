@@ -18,7 +18,7 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class HighlightFrameLayout extends FrameLayout implements HighlightView ,HighlightDrawView{
+public class HighlightFrameLayout extends FrameLayout implements HighlightView,HighlightDrawView{
     private final HighlightAnimHolder mHighlightAnimHolder;
     private final HighlightDraw mHighlightDraw;
     private final Paint mImagePaint;
@@ -102,11 +102,6 @@ public class HighlightFrameLayout extends FrameLayout implements HighlightView ,
         if (mHighlightAnimHolder.isStartBeforeLayout()){
             mHighlightAnimHolder.startAnim();
         }
-    }
-
-    @Override
-    public View getView() {
-        return this;
     }
 
     @Override

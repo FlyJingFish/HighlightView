@@ -1,8 +1,6 @@
 package com.flyjingfish.highlightviewlib;
 
-import android.view.View;
 
-interface HighlightDrawView {
-    View getView();
+interface HighlightDrawView extends HighlightView{
     HighlightDraw getHighlightDraw();
 }

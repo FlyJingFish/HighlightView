@@ -104,7 +104,7 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
         }
 
         @Override
-        public View getView() {
+        public View thisView() {
             return this;
         }
 
