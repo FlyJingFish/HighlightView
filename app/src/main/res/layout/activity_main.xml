@@ -59,4 +59,35 @@
         app:highlight_text_startDirection="from_left"
         android:layout_marginTop="10dp"/>
 
+    <com.flyjingfish.highlightviewlib.HighlightLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:highlight_image_highlightWidth="40dp"
+        app:highlight_image_highlightColor="#E6ffffff"
+        app:highlight_image_autoStart="true"
+        app:highlight_image_duration="2500"
+        app:highlight_image_repeatCount="-1"
+        app:highlight_image_repeatMode="restart"
+        app:highlight_text_highlightRotateDegrees="80"
+        app:highlight_text_startDirection="from_left">
+        <ImageView
+            android:layout_width="154dp"
+            android:layout_height="64dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/e_bank"
+            android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Hello World! "
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:textSize="30sp"/>
+
+    </com.flyjingfish.highlightviewlib.HighlightLayout>
+
 </LinearLayout>

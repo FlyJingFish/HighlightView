@@ -23,7 +23,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 
 public class HighlightImageView extends AppCompatImageView implements HighlightView {
     private final HighlightFrontImageView mFrontImageView;
-    private final HighlightAnimHolder highlightAnimHolder;
+    private final HighlightAnimHolder mHighlightAnimHolder;
 
     public HighlightImageView(@NonNull Context context) {
         this(context, null);
@@ -47,18 +47,18 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
         boolean autoStart = a.getBoolean(R.styleable.HighlightImageView_highlight_image_autoStart,false);
         a.recycle();
 
-        highlightAnimHolder = new HighlightAnimHolder(mFrontImageView,this);
+        mHighlightAnimHolder = new HighlightAnimHolder(mFrontImageView,this);
 
-        highlightAnimHolder.setDuration(duration);
-        highlightAnimHolder.setRepeatCount(repeatCount);
-        highlightAnimHolder.setRepeatMode(repeatMode);
-        highlightAnimHolder.setHighlightWidth(highlightWidth);
-        highlightAnimHolder.setHighlightRotateDegrees(highlightRotateDegrees);
-        highlightAnimHolder.setStartDirection(startDirection);
-        highlightAnimHolder.setHighlightColor(highlightColor);
+        mHighlightAnimHolder.setDuration(duration);
+        mHighlightAnimHolder.setRepeatCount(repeatCount);
+        mHighlightAnimHolder.setRepeatMode(repeatMode);
+        mHighlightAnimHolder.setHighlightWidth(highlightWidth);
+        mHighlightAnimHolder.setHighlightRotateDegrees(highlightRotateDegrees);
+        mHighlightAnimHolder.setStartDirection(startDirection);
+        mHighlightAnimHolder.setHighlightColor(highlightColor);
         mFrontImageView.setBackground(null);
         if (autoStart){
-            highlightAnimHolder.startHighlightEffect();
+            mHighlightAnimHolder.startHighlightEffect();
         }
 
     }
@@ -76,7 +76,7 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
     }
 
     public HighlightAnimHolder getHighlightAnimHolder() {
-        return highlightAnimHolder;
+        return mHighlightAnimHolder;
     }
 
     private static class HighlightFrontImageView extends AppCompatImageView implements HighlightDrawView{
@@ -132,9 +132,9 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         mFrontImageView.layout(left, top, right, bottom);
         super.onLayout(changed, left, top, right, bottom);
-        highlightAnimHolder.setFinishLayout(true);
-        if (highlightAnimHolder.isStartBeforeLayout()){
-            highlightAnimHolder.startAnim();
+        mHighlightAnimHolder.setFinishLayout(true);
+        if (mHighlightAnimHolder.isStartBeforeLayout()){
+            mHighlightAnimHolder.startAnim();
         }
     }
 

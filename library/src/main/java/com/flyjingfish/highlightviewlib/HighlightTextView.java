@@ -19,8 +19,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 public class HighlightTextView extends AppCompatTextView implements HighlightView {
     private final HighlightFrontTextView mFrontTextView;
-    private final HighlightAnimHolder highlightAnimHolder;
-    private final AppCompatTextView mTextView;
+    private final HighlightAnimHolder mHighlightAnimHolder;
 
 
     public HighlightTextView(@NonNull Context context) {
@@ -34,7 +33,6 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
     public HighlightTextView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mFrontTextView = new HighlightFrontTextView(context, attrs, defStyleAttr);
-        mTextView = new AppCompatTextView(context, attrs, defStyleAttr);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HighlightTextView);
         int highlightColor = a.getColor(R.styleable.HighlightTextView_highlight_text_highlightColor,Color.TRANSPARENT);
         long duration = a.getInteger(R.styleable.HighlightTextView_highlight_text_duration,1000);
@@ -46,22 +44,20 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
         boolean autoStart = a.getBoolean(R.styleable.HighlightTextView_highlight_text_autoStart,false);
         a.recycle();
 
-        highlightAnimHolder = new HighlightAnimHolder(mFrontTextView,this);
+        mHighlightAnimHolder = new HighlightAnimHolder(mFrontTextView,this);
 
-        highlightAnimHolder.setDuration(duration);
-        highlightAnimHolder.setRepeatCount(repeatCount);
-        highlightAnimHolder.setRepeatMode(repeatMode);
-        highlightAnimHolder.setHighlightWidth(highlightWidth);
-        highlightAnimHolder.setHighlightRotateDegrees(highlightRotateDegrees);
-        highlightAnimHolder.setStartDirection(startDirection);
-        highlightAnimHolder.setHighlightColor(highlightColor);
+        mHighlightAnimHolder.setDuration(duration);
+        mHighlightAnimHolder.setRepeatCount(repeatCount);
+        mHighlightAnimHolder.setRepeatMode(repeatMode);
+        mHighlightAnimHolder.setHighlightWidth(highlightWidth);
+        mHighlightAnimHolder.setHighlightRotateDegrees(highlightRotateDegrees);
+        mHighlightAnimHolder.setStartDirection(startDirection);
+        mHighlightAnimHolder.setHighlightColor(highlightColor);
 
         mFrontTextView.setBackground(null);
-        mTextView.setBackground(null);
         mFrontTextView.setTextColor(Color.BLACK);
-        mTextView.setTextColor(Color.BLACK);
         if (autoStart){
-            highlightAnimHolder.startHighlightEffect();
+            mHighlightAnimHolder.startHighlightEffect();
         }
 
     }
@@ -72,7 +68,7 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
     }
 
     public HighlightAnimHolder getHighlightAnimHolder() {
-        return highlightAnimHolder;
+        return mHighlightAnimHolder;
     }
 
     @Override
@@ -82,7 +78,7 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
 
         getPaint().setXfermode(null);
         canvas.saveLayer(new RectF(0, 0, canvas.getWidth(),  canvas.getHeight()),  getPaint(), Canvas.ALL_SAVE_FLAG);
-        mTextView.draw(canvas);
+        super.onDraw(canvas);
         getPaint().setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.saveLayer(new RectF(0, 0, canvas.getWidth(),  canvas.getHeight()),  getPaint(), Canvas.ALL_SAVE_FLAG);
         mFrontTextView.draw(canvas);
@@ -129,36 +125,28 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
             mFrontTextView.setLayoutParams(params);
         }
 
-        if (mTextView != null){
-            mTextView.setLayoutParams(params);
-        }
         super.setLayoutParams(params);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         mFrontTextView.measure(widthMeasureSpec, heightMeasureSpec);
-        mTextView.measure(widthMeasureSpec, heightMeasureSpec);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         mFrontTextView.layout(left, top, right, bottom);
-        mTextView.layout(left, top, right, bottom);
         super.onLayout(changed, left, top, right, bottom);
-        highlightAnimHolder.setFinishLayout(true);
-        if (highlightAnimHolder.isStartBeforeLayout()){
-            highlightAnimHolder.startAnim();
+        mHighlightAnimHolder.setFinishLayout(true);
+        if (mHighlightAnimHolder.isStartBeforeLayout()){
+            mHighlightAnimHolder.startAnim();
         }
     }
 
     @Override
     public void setText(CharSequence text, BufferType type) {
         super.setText(text, type);
-        if (mTextView != null){
-            mTextView.setText(text, type);
-        }
         if (mFrontTextView != null){
             mFrontTextView.setText(text, type);
         }
