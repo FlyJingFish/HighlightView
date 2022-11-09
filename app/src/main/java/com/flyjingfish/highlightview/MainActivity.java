@@ -21,5 +21,14 @@ public class MainActivity extends AppCompatActivity {
                 highlightTextView.setText("1111");
             }
         });
+
+//        highlightTextView.getHighlightAnimHolder().setHighlightColor(Color.BLUE);
+//        highlightTextView.getHighlightAnimHolder().setHighlightWidth(90);
+//        highlightTextView.getHighlightAnimHolder().setDuration(2000);
+//        highlightTextView.getHighlightAnimHolder().setHighlightRotateDegrees(60);
+//        highlightTextView.getHighlightAnimHolder().setRepeatMode(HighlightAnimHolder.REVERSE);
+//        highlightTextView.getHighlightAnimHolder().setRepeatCount(4);
+//        highlightTextView.getHighlightAnimHolder().setStartDirection(HighlightAnimHolder.FROM_RIGHT);
+//        highlightTextView.getHighlightAnimHolder().startHighlightEffect();
     }
 }
