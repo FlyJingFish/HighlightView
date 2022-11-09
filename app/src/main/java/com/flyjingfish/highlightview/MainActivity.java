@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.flyjingfish.highlightviewlib.HighlightFrameLayout;
 import com.flyjingfish.highlightviewlib.HighlightLinearLayout;
 import com.flyjingfish.highlightviewlib.HighlightTextView;
 
@@ -17,21 +16,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         HighlightTextView highlightTextView = findViewById(R.id.highlightTextView);
-        HighlightFrameLayout highlightFrameLayout = findViewById(R.id.highlightFrameLayout);
         HighlightLinearLayout highlightLinearLayout = findViewById(R.id.highlightLinearLayout);
-        highlightTextView.setOnClickListener(new View.OnClickListener() {
+        highlightTextView.setOnClickListener(v -> highlightTextView.getHighlightAnimHolder().stopHighlightEffect());
+
+        highlightLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                highlightTextView.getHighlightAnimHolder().stopHighlightEffect();
-
-            }
-        });
-
-        highlightFrameLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                highlightLinearLayout.getHighlightAnimHolder().stopHighlightEffect();
-                highlightFrameLayout.getHighlightAnimHolder().stopHighlightEffect();
+                if (highlightLinearLayout.getHighlightAnimHolder().isPaused()){
+                    highlightLinearLayout.getHighlightAnimHolder().resumeHighlightEffect();
+                }else {
+                    highlightLinearLayout.getHighlightAnimHolder().pauseHighlightEffect();
+                }
             }
         });
 

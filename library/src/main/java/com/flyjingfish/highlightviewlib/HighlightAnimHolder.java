@@ -103,6 +103,27 @@ public class HighlightAnimHolder {
         isStartBeforeLayout = false;
     }
 
+    public void resumeHighlightEffect() {
+        if (mHighlightEffectAnim != null){
+            mHighlightEffectAnim.resume();
+        }else {
+            startHighlightEffect();
+        }
+    }
+
+    public void pauseHighlightEffect() {
+        if (mHighlightEffectAnim != null){
+            mHighlightEffectAnim.pause();
+        }
+    }
+
+    public boolean isPaused() {
+        if (mHighlightEffectAnim != null){
+            return mHighlightEffectAnim.isPaused();
+        }
+        return true;
+    }
+
 
     protected void startAnim(){
         int viewWidth = getWidth();
