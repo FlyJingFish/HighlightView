@@ -83,6 +83,7 @@ public class HighlightLinearLayout extends LinearLayout implements HighlightView
         canvas.saveLayer(new RectF(0, 0, canvas.getWidth(),  canvas.getHeight()),  mImagePaint, Canvas.ALL_SAVE_FLAG);
         super.dispatchDraw(canvas);
         getHighlightDraw().onDraw(canvas);
+        super.dispatchDraw(canvas);
     }
 
     @Override

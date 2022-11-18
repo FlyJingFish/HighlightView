@@ -20,7 +20,7 @@
 
 ```gradle
     dependencies {
-        implementation 'com.github.FlyJingFish:HighlightView:1.1.1'
+        implementation 'com.github.FlyJingFish:HighlightView:1.1.2'
     }
 ```
 ## 第三步，使用说明
@@ -129,6 +129,7 @@
 | resumeHighlightEffect |      继续动画       |
 | pauseHighlightEffect  |      暂停动画       |
 | isPaused              |     是否暂停动画      |
+| setInterpolator       |      设置插值器      |
 
 **例如**
 

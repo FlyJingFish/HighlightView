@@ -99,6 +99,9 @@ public class HighlightAnimHolder {
     public void stopHighlightEffect() {
         if (mHighlightEffectAnim != null){
             mHighlightEffectAnim.cancel();
+
+            float[] location = getStartEndLocation();
+            setStartHighlightOffset(location[0]);
         }
         isStartBeforeLayout = false;
     }
@@ -126,22 +129,13 @@ public class HighlightAnimHolder {
 
 
     protected void startAnim(){
-        int viewWidth = getWidth();
-        int viewHeight = getHeight();
         if (mHighlightEffectAnim == null){
+            int viewWidth = getWidth();
             mHighlightEffectAnim = ObjectAnimator.ofFloat(this, "startHighlightOffset", -getHighlightWidth(), viewWidth+ getHighlightWidth());
         }else {
             mHighlightEffectAnim.cancel();
         }
-        if (getStartDirection() == FROM_RIGHT){
-            mHighlightEffectAnim.setFloatValues(viewWidth+ getHighlightWidth(),-getHighlightWidth());
-        }else if (getStartDirection() == FROM_TOP){
-            mHighlightEffectAnim.setFloatValues(-getHighlightWidth(), viewHeight+ getHighlightWidth());
-        }else if (getStartDirection() == FROM_BOTTOM){
-            mHighlightEffectAnim.setFloatValues(viewHeight+ getHighlightWidth(),-getHighlightWidth());
-        }else {
-            mHighlightEffectAnim.setFloatValues(-getHighlightWidth(), viewWidth+ getHighlightWidth());
-        }
+        mHighlightEffectAnim.setFloatValues(getStartEndLocation());
         mHighlightEffectAnim.setDuration(getDuration());
         mHighlightEffectAnim.setInterpolator(getInterpolator());
         mHighlightEffectAnim.setRepeatCount(getRepeatCount());
@@ -149,7 +143,21 @@ public class HighlightAnimHolder {
         mHighlightEffectAnim.start();
     }
 
-
+    private float[] getStartEndLocation(){
+        int viewWidth = getWidth();
+        int viewHeight = getHeight();
+        float[] location;
+        if (getStartDirection() == FROM_RIGHT){
+            location = new float[]{viewWidth+ getHighlightWidth(),-getHighlightWidth()};
+        }else if (getStartDirection() == FROM_TOP){
+            location = new float[]{-getHighlightWidth(), viewHeight+ getHighlightWidth()};
+        }else if (getStartDirection() == FROM_BOTTOM){
+            location = new float[]{viewHeight+ getHighlightWidth(),-getHighlightWidth()};
+        }else {
+            location = new float[]{-getHighlightWidth(), viewWidth+ getHighlightWidth()};
+        }
+        return location;
+    }
 
     public float getHighlightRotateDegrees() {
         return mHighlightDrawView.getHighlightDraw().getHighlightRotateDegrees();
