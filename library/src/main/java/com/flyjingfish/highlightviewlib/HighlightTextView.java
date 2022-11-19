@@ -1,10 +1,7 @@
 package com.flyjingfish.highlightviewlib;
 
-import static com.flyjingfish.highlightviewlib.HighlightAnimHolder.FROM_LEFT;
-import static com.flyjingfish.highlightviewlib.HighlightAnimHolder.RESTART;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -15,6 +12,7 @@ import android.util.AttributeSet;
 import android.util.LayoutDirection;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -22,7 +20,7 @@ import androidx.core.text.TextUtilsCompat;
 
 import java.util.Locale;
 
-public class HighlightTextView extends AppCompatTextView implements HighlightView {
+public class HighlightTextView extends AppCompatTextView implements HighlightView, AnimHolder {
     private final HighlightFrontTextView mFrontTextView;
     private final HighlightAnimHolder mHighlightAnimHolder;
     private boolean isRtl;
@@ -42,35 +40,15 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
             isRtl = TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == LayoutDirection.RTL;
         }
         mFrontTextView = new HighlightFrontTextView(context, attrs, defStyleAttr);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HighlightAnimView);
-        int highlightColor = a.getColor(R.styleable.HighlightAnimView_highlight_view_highlightColor,Color.TRANSPARENT);
-        long duration = a.getInteger(R.styleable.HighlightAnimView_highlight_view_duration,1000);
-        int repeatCount = a.getInteger(R.styleable.HighlightAnimView_highlight_view_repeatCount,0);
-        int repeatMode = a.getInt(R.styleable.HighlightAnimView_highlight_view_repeatMode,RESTART);
-        float highlightWidth = a.getDimension(R.styleable.HighlightAnimView_highlight_view_highlightWidth,10);
-        float highlightRotateDegrees = a.getFloat(R.styleable.HighlightAnimView_highlight_view_highlightRotateDegrees,30);
-        int startDirection = a.getColor(R.styleable.HighlightAnimView_highlight_view_startDirection,FROM_LEFT);
-        boolean autoStart = a.getBoolean(R.styleable.HighlightAnimView_highlight_view_autoStart,false);
-        a.recycle();
-
-        mHighlightAnimHolder = new HighlightAnimHolder(mFrontTextView,this);
-
-        mHighlightAnimHolder.setDuration(duration);
-        mHighlightAnimHolder.setRepeatCount(repeatCount);
-        mHighlightAnimHolder.setRepeatMode(repeatMode);
-        mHighlightAnimHolder.setHighlightWidth(highlightWidth);
-        mHighlightAnimHolder.setHighlightRotateDegrees(highlightRotateDegrees);
-        mHighlightAnimHolder.setStartDirection(startDirection);
-        mHighlightAnimHolder.setHighlightColor(highlightColor);
+        mHighlightAnimHolder = new HighlightAnimHolder(mFrontTextView, this);
 
         mFrontTextView.setBackground(null);
         mFrontTextView.setTextColor(Color.BLACK);
         initCompoundDrawables();
 
         mFrontTextView.setCompoundDrawablePadding(getCompoundDrawablePadding());
-        if (autoStart){
-            mHighlightAnimHolder.startHighlightEffect();
-        }
+
+        InitAttrs.init(context, attrs, mHighlightAnimHolder);
 
     }
 
@@ -79,43 +57,30 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
         return this;
     }
 
+    @Override
     public HighlightAnimHolder getHighlightAnimHolder() {
         return mHighlightAnimHolder;
     }
 
-//    @Override
-//    protected void onDraw(Canvas canvas) {
-//        getPaint().setXfermode(null);
-//        super.onDraw(canvas);
-//
-//        getPaint().setXfermode(null);
-//        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(),  canvas.getHeight()),  getPaint(), Canvas.ALL_SAVE_FLAG);
-//        super.onDraw(canvas);
-//        getPaint().setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-//        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(),  canvas.getHeight()),  getPaint(), Canvas.ALL_SAVE_FLAG);
-//        mFrontTextView.draw(canvas);
-//    }
-
-
     @Override
     protected void onDraw(Canvas canvas) {
         getPaint().setXfermode(null);
-        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(),  canvas.getHeight()),  getPaint(), Canvas.ALL_SAVE_FLAG);
+        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(), canvas.getHeight()), getPaint(), Canvas.ALL_SAVE_FLAG);
         super.onDraw(canvas);
 
 
         getPaint().setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(),  canvas.getHeight()), getPaint(), Canvas.ALL_SAVE_FLAG);
-        canvas.drawRect(0, 0, canvas.getWidth(),  canvas.getHeight(), getPaint());
+        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(), canvas.getHeight()), getPaint(), Canvas.ALL_SAVE_FLAG);
+        canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), getPaint());
 
         getPaint().setXfermode(null);
-        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(),  canvas.getHeight()),  getPaint(), Canvas.ALL_SAVE_FLAG);
+        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(), canvas.getHeight()), getPaint(), Canvas.ALL_SAVE_FLAG);
         super.onDraw(canvas);
         mFrontTextView.draw(canvas);
     }
 
 
-    private static class HighlightFrontTextView extends AppCompatTextView implements HighlightDrawView{
+    private static class HighlightFrontTextView extends AppCompatTextView implements HighlightDrawView {
         private final HighlightDraw highlightDraw;
 
         public HighlightFrontTextView(@NonNull Context context) {
@@ -151,7 +116,7 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
 
     @Override
     public void setLayoutParams(ViewGroup.LayoutParams params) {
-        if (mFrontTextView != null){
+        if (mFrontTextView != null) {
             mFrontTextView.setLayoutParams(params);
         }
 
@@ -168,15 +133,12 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         mFrontTextView.layout(left, top, right, bottom);
         super.onLayout(changed, left, top, right, bottom);
-        mHighlightAnimHolder.setFinishLayout(true);
-        if (mHighlightAnimHolder.isStartBeforeLayout()){
-            mHighlightAnimHolder.startAnim();
-        }
+        mHighlightAnimHolder.onLayout(changed, left, top, right, bottom);
     }
 
     @Override
     public void setText(CharSequence text, BufferType type) {
-        if (mFrontTextView != null){
+        if (mFrontTextView != null) {
             mFrontTextView.setText(text, type);
         }
         super.setText(text, type);
@@ -197,13 +159,13 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
     @Override
     public void setCompoundDrawablePadding(int pad) {
         super.setCompoundDrawablePadding(pad);
-        if (mFrontTextView != null){
+        if (mFrontTextView != null) {
             mFrontTextView.setCompoundDrawablePadding(pad);
         }
     }
 
-    private void initCompoundDrawables(){
-        if (mFrontTextView == null){
+    private void initCompoundDrawables() {
+        if (mFrontTextView == null) {
             return;
         }
         Drawable[] drawablesRelative = getCompoundDrawablesRelative();
@@ -214,39 +176,39 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
         Drawable drawableRight;
         Drawable drawableTop = null;
         Drawable drawableBottom = null;
-        if (isRtl){
-            if (drawablesRelative[0] != null || drawablesRelative[2] != null){
+        if (isRtl) {
+            if (drawablesRelative[0] != null || drawablesRelative[2] != null) {
                 drawableLeft = drawablesRelative[2];
                 drawableRight = drawablesRelative[0];
-            }else {
+            } else {
                 drawableLeft = drawables[0];
                 drawableRight = drawables[2];
             }
 
-        }else {
-            if (drawablesRelative[0] != null || drawablesRelative[2] != null){
+        } else {
+            if (drawablesRelative[0] != null || drawablesRelative[2] != null) {
                 drawableLeft = drawablesRelative[0];
                 drawableRight = drawablesRelative[2];
-            }else {
+            } else {
                 drawableLeft = drawables[0];
                 drawableRight = drawables[2];
             }
 
         }
 
-        if (drawablesRelative[1] != null){
+        if (drawablesRelative[1] != null) {
             drawableTop = drawablesRelative[1];
-        }else if (drawables[1] != null){
+        } else if (drawables[1] != null) {
             drawableTop = drawables[1];
         }
 
-        if (drawablesRelative[3] != null){
+        if (drawablesRelative[3] != null) {
             drawableBottom = drawablesRelative[3];
-        }else if (drawables[3] != null){
+        } else if (drawables[3] != null) {
             drawableBottom = drawables[3];
         }
 
-        mFrontTextView.setCompoundDrawables(drawableLeft,drawableTop,drawableRight,drawableBottom);
+        mFrontTextView.setCompoundDrawables(drawableLeft, drawableTop, drawableRight, drawableBottom);
     }
 
 }

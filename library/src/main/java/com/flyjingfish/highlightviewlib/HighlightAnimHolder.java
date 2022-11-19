@@ -247,4 +247,11 @@ public class HighlightAnimHolder {
     protected void setStartBeforeLayout(boolean startBeforeLayout) {
         isStartBeforeLayout = startBeforeLayout;
     }
+
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom){
+        setFinishLayout(true);
+        if (isStartBeforeLayout()){
+            startAnim();
+        }
+    }
 }

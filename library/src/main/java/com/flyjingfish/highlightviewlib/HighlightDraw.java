@@ -18,109 +18,105 @@ import androidx.annotation.ColorInt;
 
 class HighlightDraw {
 
-    private float startHighlightOffset = 0;
-    private float highlightWidth = 0;
+    private float mStartHighlightOffset = 0;
+    private float mHighlightWidth = 0;
     private final Paint mImagePaint;
-    private float highlightRotateDegrees = 0;
-    private int highlightColor;
-    private int highlightEndColor;
+    private float mHighlightRotateDegrees = 0;
+    private int mHighlightColor;
+    private int mHighlightEndColor;
     private int mStartDirection = FROM_LEFT;
-    private final HighlightDrawView highlightDrawView;
+    private final HighlightDrawView mHighlightDrawView;
 
 
-    public HighlightDraw(HighlightDrawView highlightDrawView) {
-        this.highlightDrawView = highlightDrawView;
-        mImagePaint = new Paint();
-        mImagePaint.setColor(Color.BLACK);
-        mImagePaint.setAntiAlias(true);
-        mImagePaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        mImagePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+    protected HighlightDraw(HighlightDrawView highlightDrawView) {
+        this.mHighlightDrawView = highlightDrawView;
+        mImagePaint = InitAttrs.initPaint();
     }
 
-    private int getWidth(){
-        return highlightDrawView.thisView().getWidth();
+    private int getWidth() {
+        return mHighlightDrawView.thisView().getWidth();
     }
 
-    private int getHeight(){
-        return highlightDrawView.thisView().getHeight();
+    private int getHeight() {
+        return mHighlightDrawView.thisView().getHeight();
     }
 
     @SuppressLint("DrawAllocation")
-    public void onDraw(Canvas canvas) {
+    protected void onDraw(Canvas canvas) {
         int hypotenuseLength = (int) Math.sqrt(Math.pow(getWidth(), 2) + Math.pow(getHeight(), 2));
         int left = -(hypotenuseLength - getWidth()) / 2;
         int top = -(hypotenuseLength - getHeight()) / 2;
         int right = getWidth() + (hypotenuseLength - getWidth()) / 2;
         int bottom = getHeight() + (hypotenuseLength - getHeight()) / 2;
 
-        canvas.rotate(highlightRotateDegrees, getWidth() / 2, getHeight() / 2);
+        canvas.rotate(mHighlightRotateDegrees, getWidth() / 2, getHeight() / 2);
 
         mImagePaint.setXfermode(null);
         canvas.saveLayer(new RectF(left, top, right, bottom), mImagePaint, Canvas.ALL_SAVE_FLAG);
         if (mStartDirection == FROM_TOP || mStartDirection == FROM_BOTTOM) {
             LinearGradient linearGradient =
-                    new LinearGradient(0, startHighlightOffset, 0, startHighlightOffset + highlightWidth,
-                            new int[]{highlightEndColor, highlightColor, highlightColor, highlightEndColor},
+                    new LinearGradient(0, mStartHighlightOffset, 0, mStartHighlightOffset + mHighlightWidth,
+                            new int[]{mHighlightEndColor, mHighlightColor, mHighlightColor, mHighlightEndColor},
                             new float[]{0, .45f, .55f, 1}, Shader.TileMode.CLAMP);
             mImagePaint.setShader(linearGradient);
-            canvas.drawRect(left, startHighlightOffset, right, startHighlightOffset + highlightWidth, mImagePaint);
+            canvas.drawRect(left, mStartHighlightOffset, right, mStartHighlightOffset + mHighlightWidth, mImagePaint);
         } else {
             LinearGradient linearGradient =
-                    new LinearGradient(startHighlightOffset, 0, startHighlightOffset + highlightWidth, 0,
-                            new int[]{highlightEndColor, highlightColor, highlightColor, highlightEndColor},
+                    new LinearGradient(mStartHighlightOffset, 0, mStartHighlightOffset + mHighlightWidth, 0,
+                            new int[]{mHighlightEndColor, mHighlightColor, mHighlightColor, mHighlightEndColor},
                             new float[]{0, .45f, .55f, 1}, Shader.TileMode.CLAMP);
             mImagePaint.setShader(linearGradient);
-            canvas.drawRect(startHighlightOffset, top, startHighlightOffset + highlightWidth, bottom, mImagePaint);
+            canvas.drawRect(mStartHighlightOffset, top, mStartHighlightOffset + mHighlightWidth, bottom, mImagePaint);
         }
         mImagePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
         canvas.saveLayer(new RectF(left, top, right, bottom), mImagePaint, Canvas.ALL_SAVE_FLAG);
-        canvas.rotate(-highlightRotateDegrees, getWidth() / 2, getHeight() / 2);
+        canvas.rotate(-mHighlightRotateDegrees, getWidth() / 2, getHeight() / 2);
 
     }
 
-    public float getHighlightRotateDegrees() {
-        return highlightRotateDegrees;
+    protected float getHighlightRotateDegrees() {
+        return mHighlightRotateDegrees;
     }
 
-    public void setHighlightRotateDegrees(float highlightRotateDegrees) {
-        this.highlightRotateDegrees = highlightRotateDegrees;
+    protected void setHighlightRotateDegrees(float highlightRotateDegrees) {
+        this.mHighlightRotateDegrees = highlightRotateDegrees;
     }
 
-    public float getStartHighlightOffset() {
-        return startHighlightOffset;
+    protected float getStartHighlightOffset() {
+        return mStartHighlightOffset;
     }
 
-    public void getStartHighlightOffset(float startHighlightOffset) {
-        this.startHighlightOffset = startHighlightOffset;
+    protected void getStartHighlightOffset(float startHighlightOffset) {
+        this.mStartHighlightOffset = startHighlightOffset;
     }
 
-    public float getHighlightWidth() {
-        return highlightWidth;
+    protected float getHighlightWidth() {
+        return mHighlightWidth;
     }
 
-    public void setHighlightWidth(float highlightWidth) {
-        this.highlightWidth = highlightWidth;
+    protected void setHighlightWidth(float highlightWidth) {
+        this.mHighlightWidth = highlightWidth;
     }
 
     @ColorInt
-    public int getHighlightColor() {
-        return highlightColor;
+    protected int getHighlightColor() {
+        return mHighlightColor;
     }
 
-    public void setHighlightColor(@ColorInt int highlightColor) {
-        this.highlightColor = highlightColor;
+    protected void setHighlightColor(@ColorInt int highlightColor) {
+        this.mHighlightColor = highlightColor;
 
         float[] resourceColorHsv = new float[3];
         Color.colorToHSV(highlightColor, resourceColorHsv);
 
-        this.highlightEndColor = Color.HSVToColor(1, resourceColorHsv);
+        this.mHighlightEndColor = Color.HSVToColor(1, resourceColorHsv);
     }
 
-    public int getStartDirection() {
+    protected int getStartDirection() {
         return mStartDirection;
     }
 
-    public void setStartDirection(@HighlightAnimHolder.StartDirection int startDirection) {
+    protected void setStartDirection(@HighlightAnimHolder.StartDirection int startDirection) {
         this.mStartDirection = startDirection;
     }
 }

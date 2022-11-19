@@ -1,14 +1,10 @@
 package com.flyjingfish.highlightviewlib;
 
-import static com.flyjingfish.highlightviewlib.HighlightAnimHolder.FROM_LEFT;
-import static com.flyjingfish.highlightviewlib.HighlightAnimHolder.RESTART;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -17,11 +13,12 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 
-public class HighlightImageView extends AppCompatImageView implements HighlightView {
+public class HighlightImageView extends AppCompatImageView implements HighlightView, AnimHolder {
     private final HighlightFrontImageView mFrontImageView;
     private final HighlightAnimHolder mHighlightAnimHolder;
 
@@ -36,31 +33,10 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
     public HighlightImageView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mFrontImageView = new HighlightFrontImageView(context, attrs, defStyleAttr);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HighlightAnimView);
-        int highlightColor = a.getColor(R.styleable.HighlightAnimView_highlight_view_highlightColor,Color.TRANSPARENT);
-        long duration = a.getInteger(R.styleable.HighlightAnimView_highlight_view_duration,1000);
-        int repeatCount = a.getInteger(R.styleable.HighlightAnimView_highlight_view_repeatCount,0);
-        int repeatMode = a.getInt(R.styleable.HighlightAnimView_highlight_view_repeatMode,RESTART);
-        float highlightWidth = a.getDimension(R.styleable.HighlightAnimView_highlight_view_highlightWidth,10);
-        float highlightRotateDegrees = a.getFloat(R.styleable.HighlightAnimView_highlight_view_highlightRotateDegrees,30);
-        int startDirection = a.getColor(R.styleable.HighlightAnimView_highlight_view_startDirection,FROM_LEFT);
-        boolean autoStart = a.getBoolean(R.styleable.HighlightAnimView_highlight_view_autoStart,false);
-        a.recycle();
-
-        mHighlightAnimHolder = new HighlightAnimHolder(mFrontImageView,this);
-
-        mHighlightAnimHolder.setDuration(duration);
-        mHighlightAnimHolder.setRepeatCount(repeatCount);
-        mHighlightAnimHolder.setRepeatMode(repeatMode);
-        mHighlightAnimHolder.setHighlightWidth(highlightWidth);
-        mHighlightAnimHolder.setHighlightRotateDegrees(highlightRotateDegrees);
-        mHighlightAnimHolder.setStartDirection(startDirection);
-        mHighlightAnimHolder.setHighlightColor(highlightColor);
+        mHighlightAnimHolder = new HighlightAnimHolder(mFrontImageView, this);
         mFrontImageView.setBackground(null);
-        if (autoStart){
-            mHighlightAnimHolder.startHighlightEffect();
-        }
 
+        InitAttrs.init(context, attrs, mHighlightAnimHolder);
     }
 
     @Override
@@ -75,11 +51,12 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
         return this;
     }
 
+    @Override
     public HighlightAnimHolder getHighlightAnimHolder() {
         return mHighlightAnimHolder;
     }
 
-    private static class HighlightFrontImageView extends AppCompatImageView implements HighlightDrawView{
+    private static class HighlightFrontImageView extends AppCompatImageView implements HighlightDrawView {
         private final HighlightDraw highlightDraw;
 
         public HighlightFrontImageView(@NonNull Context context) {
@@ -116,7 +93,7 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
 
     @Override
     public void setLayoutParams(ViewGroup.LayoutParams params) {
-        if (mFrontImageView != null){
+        if (mFrontImageView != null) {
             mFrontImageView.setLayoutParams(params);
         }
         super.setLayoutParams(params);
@@ -132,15 +109,12 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         mFrontImageView.layout(left, top, right, bottom);
         super.onLayout(changed, left, top, right, bottom);
-        mHighlightAnimHolder.setFinishLayout(true);
-        if (mHighlightAnimHolder.isStartBeforeLayout()){
-            mHighlightAnimHolder.startAnim();
-        }
+        mHighlightAnimHolder.onLayout(changed, left, top, right, bottom);
     }
 
     @Override
     public void setScaleType(ScaleType scaleType) {
-        if (mFrontImageView != null){
+        if (mFrontImageView != null) {
             mFrontImageView.setScaleType(scaleType);
         }
         super.setScaleType(scaleType);
@@ -148,7 +122,7 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
 
     @Override
     public void setImageBitmap(Bitmap bm) {
-        if (mFrontImageView != null){
+        if (mFrontImageView != null) {
             mFrontImageView.setImageBitmap(bm);
         }
         super.setImageBitmap(bm);
@@ -156,7 +130,7 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
 
     @Override
     public void setImageDrawable(@Nullable Drawable drawable) {
-        if (mFrontImageView != null){
+        if (mFrontImageView != null) {
             mFrontImageView.setImageDrawable(drawable);
         }
         super.setImageDrawable(drawable);
@@ -164,7 +138,7 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
 
     @Override
     public void setImageResource(int resId) {
-        if (mFrontImageView != null){
+        if (mFrontImageView != null) {
             mFrontImageView.setImageResource(resId);
         }
         super.setImageResource(resId);
@@ -172,7 +146,7 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
 
     @Override
     public void setImageURI(@Nullable Uri uri) {
-        if (mFrontImageView != null){
+        if (mFrontImageView != null) {
             mFrontImageView.setImageURI(uri);
         }
         super.setImageURI(uri);
@@ -180,7 +154,7 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
 
     @Override
     public void setImageAlpha(int alpha) {
-        if (mFrontImageView != null){
+        if (mFrontImageView != null) {
             mFrontImageView.setImageAlpha(alpha);
         }
         super.setImageAlpha(alpha);
@@ -188,7 +162,7 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
 
     @Override
     public void setImageLevel(int level) {
-        if (mFrontImageView != null){
+        if (mFrontImageView != null) {
             mFrontImageView.setImageLevel(level);
         }
         super.setImageLevel(level);
@@ -196,7 +170,7 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
 
     @Override
     public void setImageState(int[] state, boolean merge) {
-        if (mFrontImageView != null){
+        if (mFrontImageView != null) {
             mFrontImageView.setImageState(state, merge);
         }
         super.setImageState(state, merge);
@@ -204,7 +178,7 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
 
     @Override
     public void setImageTintList(@Nullable ColorStateList tint) {
-        if (mFrontImageView != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (mFrontImageView != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mFrontImageView.setImageTintList(tint);
         }
         super.setImageTintList(tint);
@@ -212,7 +186,7 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
 
     @Override
     public void setImageTintMode(@Nullable PorterDuff.Mode tintMode) {
-        if (mFrontImageView != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (mFrontImageView != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mFrontImageView.setImageTintMode(tintMode);
         }
         super.setImageTintMode(tintMode);
@@ -220,7 +194,7 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
 
     @Override
     public void setImageMatrix(Matrix matrix) {
-        if (mFrontImageView != null){
+        if (mFrontImageView != null) {
             mFrontImageView.setImageMatrix(matrix);
         }
         super.setImageMatrix(matrix);
