@@ -1,5 +1,9 @@
 # HighlightView
 [![](https://jitpack.io/v/FlyJingFish/HighlightView.svg)](https://jitpack.io/#FlyJingFish/HighlightView)
+[![GitHub stars](https://img.shields.io/github/stars/FlyJingFish/HighlightView.svg)](https://github.com/FlyJingFish/HighlightView/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/FlyJingFish/HighlightView.svg)](https://github.com/FlyJingFish/HighlightView/network)
+[![GitHub issues](https://img.shields.io/github/issues/FlyJingFish/HighlightView.svg)](https://github.com/FlyJingFish/HighlightView/issues)
+[![GitHub license](https://img.shields.io/github/license/FlyJingFish/HighlightView.svg)](https://github.com/FlyJingFish/HighlightView/blob/master/LICENSE)
 
 ## 支持高亮灯光移动效果的 TextView、ImageView、FrameLayout、LinearLayout、RelativeLayout
 
