@@ -49,7 +49,7 @@ class HighlightDraw {
         int right = getWidth() + (hypotenuseLength - getWidth()) / 2;
         int bottom = getHeight() + (hypotenuseLength - getHeight()) / 2;
 
-        canvas.rotate(mHighlightRotateDegrees, getWidth() / 2, getHeight() / 2);
+        canvas.rotate(mHighlightRotateDegrees, getWidth() / 2f, getHeight() / 2f);
 
         mImagePaint.setXfermode(null);
         canvas.saveLayer(new RectF(left, top, right, bottom), mImagePaint, Canvas.ALL_SAVE_FLAG);
@@ -70,7 +70,7 @@ class HighlightDraw {
         }
         mImagePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
         canvas.saveLayer(new RectF(left, top, right, bottom), mImagePaint, Canvas.ALL_SAVE_FLAG);
-        canvas.rotate(-mHighlightRotateDegrees, getWidth() / 2, getHeight() / 2);
+        canvas.rotate(-mHighlightRotateDegrees, getWidth() / 2f, getHeight() / 2f);
 
     }
 

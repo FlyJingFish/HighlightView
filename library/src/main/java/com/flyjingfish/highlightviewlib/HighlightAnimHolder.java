@@ -3,6 +3,7 @@ package com.flyjingfish.highlightviewlib;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 
@@ -37,6 +38,23 @@ public class HighlightAnimHolder {
     public HighlightAnimHolder(HighlightDrawView highlightDrawView,HighlightView highlightView) {
         this.mHighlightDrawView = highlightDrawView;
         this.mHighlightView = highlightView;
+        if (highlightView.thisView() != null){
+            Context context = highlightView.thisView().getContext();
+            if (context instanceof LifecycleOwner){
+                ((LifecycleOwner) context).getLifecycle().addObserver(new LifecycleEventObserver() {
+                    @Override
+                    public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
+                        if (mHighlightEffectAnim == null) {
+                            return;
+                        }
+                        if (event == Lifecycle.Event.ON_DESTROY) {
+                            mHighlightEffectAnim.removeAllListeners();
+                            mHighlightEffectAnim.cancel();
+                        }
+                    }
+                });
+            }
+        }
     }
 
     @IntDef({RESTART, REVERSE})
@@ -60,7 +78,7 @@ public class HighlightAnimHolder {
             if (mHighlightEffectAnim == null){
                 return;
             }
-            if (event == Lifecycle.Event.ON_RESUME){
+            if (event == Lifecycle.Event.ON_START){
                 mHighlightEffectAnim.resume();
             }else if (event == Lifecycle.Event.ON_STOP){
                 mHighlightEffectAnim.pause();
@@ -98,6 +116,7 @@ public class HighlightAnimHolder {
 
     public void stopHighlightEffect() {
         if (mHighlightEffectAnim != null){
+            mHighlightEffectAnim.removeAllListeners();
             mHighlightEffectAnim.cancel();
 
             float[] location = getStartEndLocation();

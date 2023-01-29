@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        highlightTextView.getHighlightAnimHolder().addLifecycleObserver(this);
 //        highlightTextView.getHighlightAnimHolder().setHighlightColor(Color.BLUE);
 //        highlightTextView.getHighlightAnimHolder().setHighlightWidth(90);
 //        highlightTextView.getHighlightAnimHolder().setDuration(2000);
