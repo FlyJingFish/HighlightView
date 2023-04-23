@@ -18,8 +18,10 @@ import androidx.annotation.ColorInt;
 
 class HighlightDraw {
 
-    private final RectF mRectF;
-    private final PorterDuffXfermode mDstInXfermode;
+    private final RectF mRectF = new RectF();
+    private final PorterDuffXfermode mDstInXfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
+    private final float[] mGradientPosition = new float[]{0, .45f, .55f, 1};
+    private final int[] mGradientColors;
     private float mStartHighlightOffset = 0;
     private float mHighlightWidth = 0;
     private final Paint mImagePaint;
@@ -33,8 +35,7 @@ class HighlightDraw {
     protected HighlightDraw(HighlightDrawView highlightDrawView) {
         this.mHighlightDrawView = highlightDrawView;
         mImagePaint = InitAttrs.initPaint();
-        mRectF = new RectF();
-        mDstInXfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
+        mGradientColors = new int[]{mHighlightEndColor, mHighlightColor, mHighlightColor, mHighlightEndColor};
     }
 
     private int getWidth() {
@@ -63,15 +64,13 @@ class HighlightDraw {
         if (mStartDirection == FROM_TOP || mStartDirection == FROM_BOTTOM) {
             LinearGradient linearGradient =
                     new LinearGradient(0, mStartHighlightOffset, 0, mStartHighlightOffset + mHighlightWidth,
-                            new int[]{mHighlightEndColor, mHighlightColor, mHighlightColor, mHighlightEndColor},
-                            new float[]{0, .45f, .55f, 1}, Shader.TileMode.CLAMP);
+                            mGradientColors, mGradientPosition, Shader.TileMode.CLAMP);
             mImagePaint.setShader(linearGradient);
             canvas.drawRect(left, mStartHighlightOffset, right, mStartHighlightOffset + mHighlightWidth, mImagePaint);
         } else {
             LinearGradient linearGradient =
                     new LinearGradient(mStartHighlightOffset, 0, mStartHighlightOffset + mHighlightWidth, 0,
-                            new int[]{mHighlightEndColor, mHighlightColor, mHighlightColor, mHighlightEndColor},
-                            new float[]{0, .45f, .55f, 1}, Shader.TileMode.CLAMP);
+                            mGradientColors, mGradientPosition, Shader.TileMode.CLAMP);
             mImagePaint.setShader(linearGradient);
             canvas.drawRect(mStartHighlightOffset, top, mStartHighlightOffset + mHighlightWidth, bottom, mImagePaint);
         }
@@ -117,6 +116,11 @@ class HighlightDraw {
         Color.colorToHSV(highlightColor, resourceColorHsv);
 
         this.mHighlightEndColor = Color.HSVToColor(1, resourceColorHsv);
+
+        mGradientColors[0] = mHighlightEndColor;
+        mGradientColors[1] = mHighlightColor;
+        mGradientColors[2] = mHighlightColor;
+        mGradientColors[3] = mHighlightEndColor;
     }
 
     protected int getStartDirection() {

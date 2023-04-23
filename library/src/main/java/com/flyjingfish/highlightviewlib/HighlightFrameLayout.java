@@ -19,8 +19,8 @@ public class HighlightFrameLayout extends FrameLayout implements HighlightView, 
     private final HighlightDraw mHighlightDraw;
     private final Paint mImagePaint;
 
-    private final RectF mRectF;
-    private final PorterDuffXfermode mSrcInXfermode;
+    private final RectF mRectF = new RectF();
+    private final PorterDuffXfermode mSrcInXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
 
     public HighlightFrameLayout(@NonNull Context context) {
         this(context, null);
@@ -40,9 +40,6 @@ public class HighlightFrameLayout extends FrameLayout implements HighlightView, 
 
         InitAttrs.init(context, attrs, mHighlightAnimHolder);
 
-        mRectF = new RectF();
-
-        mSrcInXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
     }
 
     @Override

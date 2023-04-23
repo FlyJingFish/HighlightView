@@ -25,9 +25,8 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
     private final HighlightFrontTextView mFrontTextView;
     private final HighlightAnimHolder mHighlightAnimHolder;
     private final boolean isRtl;
-    private final RectF mRectF;
-    private final PorterDuffXfermode mSrcInXfermode;
-
+    private final RectF mRectF = new RectF();
+    private final PorterDuffXfermode mSrcInXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
 
     public HighlightTextView(@NonNull Context context) {
         this(context, null);
@@ -51,9 +50,6 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
 
         InitAttrs.init(context, attrs, mHighlightAnimHolder);
 
-        mRectF = new RectF();
-
-        mSrcInXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
     }
 
     @Override
