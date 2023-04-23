@@ -100,12 +100,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Hello World! "
+        android:text="视频连接中"
         android:gravity="center"
-        android:textStyle="bold|italic"
+        android:textStyle="bold"
         android:textColor="@color/black"
-        android:layout_marginTop="10dp"
-        android:textSize="30sp"/>
+        android:textSize="16sp"/>
 
 </com.flyjingfish.highlightviewlib.HighlightLinearLayout>
 ```
