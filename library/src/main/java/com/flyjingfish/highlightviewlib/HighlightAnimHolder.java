@@ -37,12 +37,12 @@ public class HighlightAnimHolder {
 
     private float mHighlightRotateDegrees = 0;
 
-    public HighlightAnimHolder(HighlightDrawView highlightDrawView,HighlightView highlightView) {
+    public HighlightAnimHolder(HighlightDrawView highlightDrawView, HighlightView highlightView) {
         this.mHighlightDrawView = highlightDrawView;
         this.mHighlightView = highlightView;
-        if (highlightView.thisView() != null){
+        if (highlightView.thisView() != null) {
             Context context = highlightView.thisView().getContext();
-            if (context instanceof LifecycleOwner){
+            if (context instanceof LifecycleOwner) {
                 ((LifecycleOwner) context).getLifecycle().addObserver(new LifecycleEventObserver() {
                     @Override
                     public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
@@ -61,11 +61,13 @@ public class HighlightAnimHolder {
 
     @IntDef({RESTART, REVERSE})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface RepeatMode {}
+    public @interface RepeatMode {
+    }
 
-    @IntDef({FROM_LEFT, FROM_RIGHT,FROM_TOP, FROM_BOTTOM})
+    @IntDef({FROM_LEFT, FROM_RIGHT, FROM_TOP, FROM_BOTTOM})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface StartDirection {}
+    public @interface StartDirection {
+    }
 
     public void addLifecycleObserver(LifecycleOwner owner) {
         if (owner != null) {
@@ -77,25 +79,25 @@ public class HighlightAnimHolder {
     private final LifecycleEventObserver mLifecycleEventObserver = new LifecycleEventObserver() {
         @Override
         public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
-            if (mHighlightEffectAnim == null){
+            if (mHighlightEffectAnim == null) {
                 return;
             }
-            if (event == Lifecycle.Event.ON_START){
+            if (event == Lifecycle.Event.ON_START) {
                 mHighlightEffectAnim.resume();
-            }else if (event == Lifecycle.Event.ON_STOP){
+            } else if (event == Lifecycle.Event.ON_STOP) {
                 mHighlightEffectAnim.pause();
-            }else if (event == Lifecycle.Event.ON_DESTROY){
+            } else if (event == Lifecycle.Event.ON_DESTROY) {
                 mHighlightEffectAnim.removeAllListeners();
                 mHighlightEffectAnim.cancel();
             }
         }
     };
 
-    private int getWidth(){
+    private int getWidth() {
         return mHighlightView.thisView().getWidth();
     }
 
-    private int getHeight(){
+    private int getHeight() {
         return mHighlightView.thisView().getHeight();
     }
 
@@ -109,15 +111,15 @@ public class HighlightAnimHolder {
     }
 
     public void startHighlightEffect() {
-        if (isFinishLayout){
+        if (isFinishLayout) {
             startAnim();
-        }else {
+        } else {
             isStartBeforeLayout = true;
         }
     }
 
     public void stopHighlightEffect() {
-        if (mHighlightEffectAnim != null){
+        if (mHighlightEffectAnim != null) {
             mHighlightEffectAnim.removeAllListeners();
             mHighlightEffectAnim.cancel();
 
@@ -128,32 +130,32 @@ public class HighlightAnimHolder {
     }
 
     public void resumeHighlightEffect() {
-        if (mHighlightEffectAnim != null){
+        if (mHighlightEffectAnim != null) {
             mHighlightEffectAnim.resume();
-        }else {
+        } else {
             startHighlightEffect();
         }
     }
 
     public void pauseHighlightEffect() {
-        if (mHighlightEffectAnim != null){
+        if (mHighlightEffectAnim != null) {
             mHighlightEffectAnim.pause();
         }
     }
 
     public boolean isPaused() {
-        if (mHighlightEffectAnim != null){
+        if (mHighlightEffectAnim != null) {
             return mHighlightEffectAnim.isPaused();
         }
         return true;
     }
 
 
-    protected void startAnim(){
-        if (mHighlightEffectAnim == null){
+    protected void startAnim() {
+        if (mHighlightEffectAnim == null) {
             int viewWidth = getWidth();
-            mHighlightEffectAnim = ObjectAnimator.ofFloat(this, "startHighlightOffset", -getHighlightWidth(), viewWidth+ getHighlightWidth());
-        }else {
+            mHighlightEffectAnim = ObjectAnimator.ofFloat(this, "startHighlightOffset", -getHighlightWidth(), viewWidth + getHighlightWidth());
+        } else {
             mHighlightEffectAnim.cancel();
         }
         mHighlightEffectAnim.setFloatValues(getStartEndLocation());
@@ -164,57 +166,57 @@ public class HighlightAnimHolder {
         mHighlightEffectAnim.start();
     }
 
-    private float[] getStartEndLocation(){
+    private float[] getStartEndLocation() {
         int viewWidth = getWidth();
         int viewHeight = getHeight();
         float[] location;
-        float offset = (float) getStartOffset();
-        if (getStartDirection() == FROM_RIGHT){
-            location = new float[]{viewWidth+ offset,-(offset+getHighlightWidth())};
-        }else if (getStartDirection() == FROM_TOP){
-            location = new float[]{-(offset+getHighlightWidth()), viewHeight+ offset};
-        }else if (getStartDirection() == FROM_BOTTOM){
-            location = new float[]{viewHeight+ offset,-(offset+getHighlightWidth())};
-        }else {
-            location = new float[]{ -(offset+getHighlightWidth()), viewWidth+offset};
+        float offset = getStartOffset();
+        if (getStartDirection() == FROM_RIGHT) {
+            location = new float[]{viewWidth + offset, -(offset + getHighlightWidth())};
+        } else if (getStartDirection() == FROM_TOP) {
+            location = new float[]{-(offset + getHighlightWidth()), viewHeight + offset};
+        } else if (getStartDirection() == FROM_BOTTOM) {
+            location = new float[]{viewHeight + offset, -(offset + getHighlightWidth())};
+        } else {
+            location = new float[]{-(offset + getHighlightWidth()), viewWidth + offset};
         }
         return location;
     }
 
-    private double getStartOffset(){
+    private float getStartOffset() {
         int viewWidth = getWidth();
         int viewHeight = getHeight();
-        double offset = 0;
-        if (getStartDirection() == FROM_RIGHT || getStartDirection() == FROM_LEFT){
-            double value1 = tan()*viewWidth/2;
-            if (value1 < viewHeight/2f){
-                offset = (viewHeight/2d - value1)*sin() + viewWidth/2d/cos() - viewWidth/2d;
-            }else {
-                offset = ((value1 - viewHeight/2d)/tan()) *cos() + (viewHeight/2d/sin()) - viewWidth/2d;
+        double offset;
+        if (getStartDirection() == FROM_RIGHT || getStartDirection() == FROM_LEFT) {
+            double value1 = tan() * viewWidth / 2;
+            if (value1 < viewHeight / 2f) {
+                offset = (viewHeight / 2d - value1) * sin() + viewWidth / 2d / cos() - viewWidth / 2d;
+            } else {
+                offset = ((value1 - viewHeight / 2d) / tan()) * cos() + (viewHeight / 2d / sin()) - viewWidth / 2d;
             }
-        }else {
-            double value1 = tan()*viewHeight/2;
-            if (value1 < viewWidth/2f){
-                offset = (viewWidth/2d - value1)*sin() + viewHeight/2d/cos() - viewHeight/2d;
-            }else {
-                offset = ((value1 - viewWidth/2d)/tan()) *cos() + (viewWidth/2d/sin()) - viewHeight/2d;
+        } else {
+            double value1 = tan() * viewHeight / 2;
+            if (value1 < viewWidth / 2f) {
+                offset = (viewWidth / 2d - value1) * sin() + viewHeight / 2d / cos() - viewHeight / 2d;
+            } else {
+                offset = ((value1 - viewWidth / 2d) / tan()) * cos() + (viewWidth / 2d / sin()) - viewHeight / 2d;
             }
 
         }
-        return offset;
+        return (float) offset;
     }
 
-    private double tan(){
+    private double tan() {
         double radians = Math.toRadians(Math.abs(mHighlightRotateDegrees));
         return Math.tan(radians);
     }
 
-    private double sin(){
+    private double sin() {
         double radians = Math.toRadians(Math.abs(mHighlightRotateDegrees));
         return Math.sin(radians);
     }
 
-    private double cos(){
+    private double cos() {
         double radians = Math.toRadians(Math.abs(mHighlightRotateDegrees));
         return Math.cos(radians);
     }
@@ -237,7 +239,6 @@ public class HighlightAnimHolder {
         mHighlightDrawView.getHighlightDraw().setHighlightWidth(highlightWidth);
         mHighlightView.thisView().invalidate();
     }
-
 
 
     public void setDuration(long duration) {
@@ -309,9 +310,9 @@ public class HighlightAnimHolder {
         isStartBeforeLayout = startBeforeLayout;
     }
 
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom){
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         setFinishLayout(true);
-        if (isStartBeforeLayout()){
+        if (isStartBeforeLayout()) {
             startAnim();
         }
     }
