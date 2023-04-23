@@ -35,6 +35,8 @@ public class HighlightAnimHolder {
     private boolean isFinishLayout;
     private boolean isStartBeforeLayout;
 
+    private float mHighlightRotateDegrees = 0;
+
     public HighlightAnimHolder(HighlightDrawView highlightDrawView,HighlightView highlightView) {
         this.mHighlightDrawView = highlightDrawView;
         this.mHighlightView = highlightView;
@@ -98,11 +100,11 @@ public class HighlightAnimHolder {
     }
 
     public float getStartHighlightOffset() {
-        return mHighlightDrawView.getHighlightDraw().getStartHighlightOffset();
+        return mHighlightDrawView.getHighlightDraw().setStartHighlightOffset();
     }
 
     public void setStartHighlightOffset(float startHighlightOffset) {
-        mHighlightDrawView.getHighlightDraw().getStartHighlightOffset(startHighlightOffset);
+        mHighlightDrawView.getHighlightDraw().setStartHighlightOffset(startHighlightOffset);
         mHighlightView.thisView().invalidate();
     }
 
@@ -166,16 +168,55 @@ public class HighlightAnimHolder {
         int viewWidth = getWidth();
         int viewHeight = getHeight();
         float[] location;
+        float offset = (float) getStartOffset();
         if (getStartDirection() == FROM_RIGHT){
-            location = new float[]{viewWidth+ getHighlightWidth(),-getHighlightWidth()};
+            location = new float[]{viewWidth+ offset,-(offset+getHighlightWidth())};
         }else if (getStartDirection() == FROM_TOP){
-            location = new float[]{-getHighlightWidth(), viewHeight+ getHighlightWidth()};
+            location = new float[]{-(offset+getHighlightWidth()), viewHeight+ offset};
         }else if (getStartDirection() == FROM_BOTTOM){
-            location = new float[]{viewHeight+ getHighlightWidth(),-getHighlightWidth()};
+            location = new float[]{viewHeight+ offset,-(offset+getHighlightWidth())};
         }else {
-            location = new float[]{-getHighlightWidth(), viewWidth+ getHighlightWidth()};
+            location = new float[]{ -(offset+getHighlightWidth()), viewWidth+offset};
         }
         return location;
+    }
+
+    private double getStartOffset(){
+        int viewWidth = getWidth();
+        int viewHeight = getHeight();
+        double offset = 0;
+        if (getStartDirection() == FROM_RIGHT || getStartDirection() == FROM_LEFT){
+            double value1 = tan()*viewWidth/2;
+            if (value1 < viewHeight/2f){
+                offset = (viewHeight/2d - value1)*sin() + viewWidth/2d/cos() - viewWidth/2d;
+            }else {
+                offset = ((value1 - viewHeight/2d)/tan()) *cos() + (viewHeight/2d/sin()) - viewWidth/2d;
+            }
+        }else {
+            double value1 = tan()*viewHeight/2;
+            if (value1 < viewWidth/2f){
+                offset = (viewWidth/2d - value1)*sin() + viewHeight/2d/cos() - viewHeight/2d;
+            }else {
+                offset = ((value1 - viewWidth/2d)/tan()) *cos() + (viewWidth/2d/sin()) - viewHeight/2d;
+            }
+
+        }
+        return offset;
+    }
+
+    private double tan(){
+        double radians = Math.toRadians(Math.abs(mHighlightRotateDegrees));
+        return Math.tan(radians);
+    }
+
+    private double sin(){
+        double radians = Math.toRadians(Math.abs(mHighlightRotateDegrees));
+        return Math.sin(radians);
+    }
+
+    private double cos(){
+        double radians = Math.toRadians(Math.abs(mHighlightRotateDegrees));
+        return Math.cos(radians);
     }
 
     public float getHighlightRotateDegrees() {
@@ -183,6 +224,7 @@ public class HighlightAnimHolder {
     }
 
     public void setHighlightRotateDegrees(float rotateDegrees) {
+        mHighlightRotateDegrees = rotateDegrees;
         mHighlightDrawView.getHighlightDraw().setHighlightRotateDegrees(rotateDegrees);
         mHighlightView.thisView().invalidate();
     }

@@ -82,11 +82,11 @@ class HighlightDraw {
         this.mHighlightRotateDegrees = highlightRotateDegrees;
     }
 
-    protected float getStartHighlightOffset() {
+    protected float setStartHighlightOffset() {
         return mStartHighlightOffset;
     }
 
-    protected void getStartHighlightOffset(float startHighlightOffset) {
+    protected void setStartHighlightOffset(float startHighlightOffset) {
         this.mStartHighlightOffset = startHighlightOffset;
     }
 
