@@ -57,7 +57,7 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
     }
 
     private static class HighlightFrontImageView extends AppCompatImageView implements HighlightDrawView {
-        private final HighlightDraw highlightDraw;
+        private final HighlightDraw mHighlightDraw;
 
         public HighlightFrontImageView(@NonNull Context context) {
             this(context, null);
@@ -70,13 +70,13 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
         public HighlightFrontImageView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
             super(context, attrs, defStyleAttr);
 
-            highlightDraw = new HighlightDraw(this);
+            mHighlightDraw = new HighlightDraw(this);
 
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
-            highlightDraw.onDraw(canvas);
+            mHighlightDraw.onDraw(canvas);
             super.onDraw(canvas);
         }
 
@@ -87,7 +87,7 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
 
         @Override
         public HighlightDraw getHighlightDraw() {
-            return highlightDraw;
+            return mHighlightDraw;
         }
     }
 

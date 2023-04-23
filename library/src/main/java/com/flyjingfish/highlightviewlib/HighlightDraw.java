@@ -18,6 +18,8 @@ import androidx.annotation.ColorInt;
 
 class HighlightDraw {
 
+    private final RectF mRectF;
+    private final PorterDuffXfermode mDstInXfermode;
     private float mStartHighlightOffset = 0;
     private float mHighlightWidth = 0;
     private final Paint mImagePaint;
@@ -31,6 +33,8 @@ class HighlightDraw {
     protected HighlightDraw(HighlightDrawView highlightDrawView) {
         this.mHighlightDrawView = highlightDrawView;
         mImagePaint = InitAttrs.initPaint();
+        mRectF = new RectF();
+        mDstInXfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
     }
 
     private int getWidth() {
@@ -43,16 +47,19 @@ class HighlightDraw {
 
     @SuppressLint("DrawAllocation")
     protected void onDraw(Canvas canvas) {
-        int hypotenuseLength = (int) Math.sqrt(Math.pow(getWidth(), 2) + Math.pow(getHeight(), 2));
-        int left = -(hypotenuseLength - getWidth()) / 2;
-        int top = -(hypotenuseLength - getHeight()) / 2;
-        int right = getWidth() + (hypotenuseLength - getWidth()) / 2;
-        int bottom = getHeight() + (hypotenuseLength - getHeight()) / 2;
+        int viewWidth = getWidth();
+        int viewHeight = getHeight();
+        int hypotenuseLength = (int) Math.sqrt(Math.pow(viewWidth, 2) + Math.pow(viewHeight, 2));
+        int left = -(hypotenuseLength - viewWidth) / 2;
+        int top = -(hypotenuseLength - viewHeight) / 2;
+        int right = viewWidth + (hypotenuseLength - viewWidth) / 2;
+        int bottom = viewHeight + (hypotenuseLength - viewHeight) / 2;
 
-        canvas.rotate(mHighlightRotateDegrees, getWidth() / 2f, getHeight() / 2f);
+        canvas.rotate(mHighlightRotateDegrees, viewWidth / 2f, viewHeight / 2f);
 
         mImagePaint.setXfermode(null);
-        canvas.saveLayer(new RectF(left, top, right, bottom), mImagePaint, Canvas.ALL_SAVE_FLAG);
+        mRectF.set(left, top, right, bottom);
+        canvas.saveLayer(mRectF, mImagePaint, Canvas.ALL_SAVE_FLAG);
         if (mStartDirection == FROM_TOP || mStartDirection == FROM_BOTTOM) {
             LinearGradient linearGradient =
                     new LinearGradient(0, mStartHighlightOffset, 0, mStartHighlightOffset + mHighlightWidth,
@@ -68,9 +75,9 @@ class HighlightDraw {
             mImagePaint.setShader(linearGradient);
             canvas.drawRect(mStartHighlightOffset, top, mStartHighlightOffset + mHighlightWidth, bottom, mImagePaint);
         }
-        mImagePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-        canvas.saveLayer(new RectF(left, top, right, bottom), mImagePaint, Canvas.ALL_SAVE_FLAG);
-        canvas.rotate(-mHighlightRotateDegrees, getWidth() / 2f, getHeight() / 2f);
+        mImagePaint.setXfermode(mDstInXfermode);
+        canvas.saveLayer(mRectF, mImagePaint, Canvas.ALL_SAVE_FLAG);
+        canvas.rotate(-mHighlightRotateDegrees, viewWidth / 2f, viewHeight / 2f);
 
     }
 

@@ -4,6 +4,7 @@ package com.flyjingfish.highlightviewlib;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
@@ -23,7 +24,9 @@ import java.util.Locale;
 public class HighlightTextView extends AppCompatTextView implements HighlightView, AnimHolder {
     private final HighlightFrontTextView mFrontTextView;
     private final HighlightAnimHolder mHighlightAnimHolder;
-    private boolean isRtl;
+    private final boolean isRtl;
+    private final RectF mRectF;
+    private final PorterDuffXfermode mSrcInXfermode;
 
 
     public HighlightTextView(@NonNull Context context) {
@@ -36,9 +39,7 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
 
     public HighlightTextView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
-            isRtl = TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == LayoutDirection.RTL;
-        }
+        isRtl = TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault()) == LayoutDirection.RTL;
         mFrontTextView = new HighlightFrontTextView(context, attrs, defStyleAttr);
         mHighlightAnimHolder = new HighlightAnimHolder(mFrontTextView, this);
 
@@ -50,6 +51,9 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
 
         InitAttrs.init(context, attrs, mHighlightAnimHolder);
 
+        mRectF = new RectF();
+
+        mSrcInXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
     }
 
     @Override
@@ -64,24 +68,26 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
 
     @Override
     protected void onDraw(Canvas canvas) {
-        getPaint().setXfermode(null);
-        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(), canvas.getHeight()), getPaint(), Canvas.ALL_SAVE_FLAG);
+        mRectF.set(0, 0, getWidth(), getHeight());
+        Paint paint = getPaint();
+        paint.setXfermode(null);
+        canvas.saveLayer(mRectF, paint, Canvas.ALL_SAVE_FLAG);
         super.onDraw(canvas);
 
 
-        getPaint().setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(), canvas.getHeight()), getPaint(), Canvas.ALL_SAVE_FLAG);
-        canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), getPaint());
+        paint.setXfermode(mSrcInXfermode);
+        canvas.saveLayer(mRectF, paint, Canvas.ALL_SAVE_FLAG);
+        canvas.drawRect(mRectF, paint);
 
-        getPaint().setXfermode(null);
-        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(), canvas.getHeight()), getPaint(), Canvas.ALL_SAVE_FLAG);
+        paint.setXfermode(null);
+        canvas.saveLayer(mRectF, paint, Canvas.ALL_SAVE_FLAG);
         super.onDraw(canvas);
         mFrontTextView.draw(canvas);
     }
 
 
     private static class HighlightFrontTextView extends AppCompatTextView implements HighlightDrawView {
-        private final HighlightDraw highlightDraw;
+        private final HighlightDraw mHighlightDraw;
 
         public HighlightFrontTextView(@NonNull Context context) {
             this(context, null);
@@ -93,13 +99,13 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
 
         public HighlightFrontTextView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
             super(context, attrs, defStyleAttr);
-            highlightDraw = new HighlightDraw(this);
+            mHighlightDraw = new HighlightDraw(this);
 
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
-            highlightDraw.onDraw(canvas);
+            mHighlightDraw.onDraw(canvas);
             super.onDraw(canvas);
         }
 
@@ -110,7 +116,7 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
 
         @Override
         public HighlightDraw getHighlightDraw() {
-            return highlightDraw;
+            return mHighlightDraw;
         }
     }
 

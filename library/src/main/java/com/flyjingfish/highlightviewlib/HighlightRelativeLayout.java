@@ -19,6 +19,10 @@ public class HighlightRelativeLayout extends RelativeLayout implements Highlight
     private final HighlightDraw mHighlightDraw;
     private final Paint mImagePaint;
 
+    private final RectF mRectF;
+
+    private final PorterDuffXfermode mSrcInXfermode;
+
     public HighlightRelativeLayout(@NonNull Context context) {
         this(context, null);
     }
@@ -36,24 +40,29 @@ public class HighlightRelativeLayout extends RelativeLayout implements Highlight
         mImagePaint = InitAttrs.initPaint();
 
         InitAttrs.init(context, attrs, mHighlightAnimHolder);
+
+        mRectF = new RectF();
+
+        mSrcInXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
     }
 
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
+        mRectF.set(0, 0, getWidth(), getHeight());
         mImagePaint.setXfermode(null);
-        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(), canvas.getHeight()), mImagePaint, Canvas.ALL_SAVE_FLAG);
+        canvas.saveLayer(mRectF, mImagePaint, Canvas.ALL_SAVE_FLAG);
         super.dispatchDraw(canvas);
 
 
-        mImagePaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(), canvas.getHeight()), mImagePaint, Canvas.ALL_SAVE_FLAG);
-        canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), mImagePaint);
+        mImagePaint.setXfermode(mSrcInXfermode);
+        canvas.saveLayer(mRectF, mImagePaint, Canvas.ALL_SAVE_FLAG);
+        canvas.drawRect(mRectF, mImagePaint);
 
         mImagePaint.setXfermode(null);
-        canvas.saveLayer(new RectF(0, 0, canvas.getWidth(), canvas.getHeight()), mImagePaint, Canvas.ALL_SAVE_FLAG);
+        canvas.saveLayer(mRectF, mImagePaint, Canvas.ALL_SAVE_FLAG);
         super.dispatchDraw(canvas);
-        getHighlightDraw().onDraw(canvas);
+        mHighlightDraw.onDraw(canvas);
         super.dispatchDraw(canvas);
     }
 

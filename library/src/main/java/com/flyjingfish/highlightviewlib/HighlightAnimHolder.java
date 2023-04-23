@@ -5,7 +5,6 @@ import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.LinearInterpolator;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.IntDef;
@@ -159,10 +158,10 @@ public class HighlightAnimHolder {
             mHighlightEffectAnim.cancel();
         }
         mHighlightEffectAnim.setFloatValues(getStartEndLocation());
-        mHighlightEffectAnim.setDuration(getDuration());
-        mHighlightEffectAnim.setInterpolator(getInterpolator());
-        mHighlightEffectAnim.setRepeatCount(getRepeatCount());
-        mHighlightEffectAnim.setRepeatMode(getRepeatMode());
+        mHighlightEffectAnim.setDuration(mDuration);
+        mHighlightEffectAnim.setInterpolator(mInterpolator);
+        mHighlightEffectAnim.setRepeatCount(mRepeatCount);
+        mHighlightEffectAnim.setRepeatMode(mRepeatMode);
         mHighlightEffectAnim.start();
     }
 
@@ -253,7 +252,7 @@ public class HighlightAnimHolder {
         if (value != null) {
             mInterpolator = value;
         } else {
-            mInterpolator = new LinearInterpolator();
+            mInterpolator = new DecelerateInterpolator();
         }
     }
 
