@@ -21,21 +21,18 @@ class HighlightDraw {
     private final RectF mRectF = new RectF();
     private final PorterDuffXfermode mDstInXfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
     private final float[] mGradientPosition = new float[]{0, .45f, .55f, 1};
-    private final int[] mGradientColors;
+    private final int[] mGradientColors = new int[4];
     private float mStartHighlightOffset = 0;
     private float mHighlightWidth = 0;
-    private final Paint mImagePaint;
+    private final Paint mImagePaint = InitAttrs.initPaint();
     private float mHighlightRotateDegrees = 0;
     private int mHighlightColor;
-    private int mHighlightEndColor;
     private int mStartDirection = FROM_LEFT;
     private final HighlightDrawView mHighlightDrawView;
 
 
     protected HighlightDraw(HighlightDrawView highlightDrawView) {
         this.mHighlightDrawView = highlightDrawView;
-        mImagePaint = InitAttrs.initPaint();
-        mGradientColors = new int[]{mHighlightEndColor, mHighlightColor, mHighlightColor, mHighlightEndColor};
     }
 
     private int getWidth() {
@@ -115,7 +112,7 @@ class HighlightDraw {
         float[] resourceColorHsv = new float[3];
         Color.colorToHSV(highlightColor, resourceColorHsv);
 
-        this.mHighlightEndColor = Color.HSVToColor(1, resourceColorHsv);
+        int mHighlightEndColor = Color.HSVToColor(1, resourceColorHsv);
 
         mGradientColors[0] = mHighlightEndColor;
         mGradientColors[1] = mHighlightColor;
