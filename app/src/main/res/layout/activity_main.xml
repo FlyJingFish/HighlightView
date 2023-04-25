@@ -7,6 +7,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:background="#999999"
+    android:id="@+id/ll_root"
     tools:context=".MainActivity">
 
     <com.flyjingfish.highlightviewlib.HighlightTextView
@@ -77,6 +78,10 @@
             android:textSize="16sp"/>
 
     </com.flyjingfish.highlightviewlib.HighlightLinearLayout>
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/recyclerView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"/>-->
 
 <!--    <com.flyjingfish.highlightviewlib.HighlightRelativeLayout-->
 <!--        android:layout_width="wrap_content"-->

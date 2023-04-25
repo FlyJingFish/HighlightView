@@ -15,16 +15,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 class InitAttrs {
-    static void init(@NonNull Context context, @Nullable AttributeSet attrs,@NonNull HighlightAnimHolder highlightAnimHolder){
+    static void init(@NonNull Context context, @Nullable AttributeSet attrs, @NonNull HighlightAnimHolder highlightAnimHolder) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HighlightAnimView);
         int highlightColor = a.getColor(R.styleable.HighlightAnimView_highlight_view_highlightColor, Color.WHITE);
-        long duration = a.getInteger(R.styleable.HighlightAnimView_highlight_view_duration,1000);
-        int repeatCount = a.getInteger(R.styleable.HighlightAnimView_highlight_view_repeatCount,0);
-        int repeatMode = a.getInt(R.styleable.HighlightAnimView_highlight_view_repeatMode,RESTART);
-        float highlightWidth = a.getDimension(R.styleable.HighlightAnimView_highlight_view_highlightWidth,10);
-        float highlightRotateDegrees = a.getFloat(R.styleable.HighlightAnimView_highlight_view_highlightRotateDegrees,0);
-        int startDirection = a.getColor(R.styleable.HighlightAnimView_highlight_view_startDirection,FROM_LEFT);
-        boolean autoStart = a.getBoolean(R.styleable.HighlightAnimView_highlight_view_autoStart,false);
+        long duration = a.getInteger(R.styleable.HighlightAnimView_highlight_view_duration, 1000);
+        int repeatCount = a.getInteger(R.styleable.HighlightAnimView_highlight_view_repeatCount, 0);
+        int repeatMode = a.getInt(R.styleable.HighlightAnimView_highlight_view_repeatMode, RESTART);
+        float highlightWidth = a.getDimension(R.styleable.HighlightAnimView_highlight_view_highlightWidth, 10);
+        float highlightRotateDegrees = a.getFloat(R.styleable.HighlightAnimView_highlight_view_highlightRotateDegrees, 0);
+        int startDirection = a.getColor(R.styleable.HighlightAnimView_highlight_view_startDirection, FROM_LEFT);
+        boolean autoStart = a.getBoolean(R.styleable.HighlightAnimView_highlight_view_autoStart, false);
         a.recycle();
 
 
@@ -36,12 +36,12 @@ class InitAttrs {
         highlightAnimHolder.setStartDirection(startDirection);
         highlightAnimHolder.setHighlightColor(highlightColor);
 
-        if (autoStart){
+        if (autoStart) {
             highlightAnimHolder.startHighlightEffect();
         }
     }
 
-    static Paint initPaint(){
+    static Paint initPaint() {
         Paint paint = new Paint();
         paint.setColor(Color.BLACK);
         paint.setAntiAlias(true);

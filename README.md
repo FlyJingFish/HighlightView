@@ -114,25 +114,25 @@
 | attr                                  |     format      | description |
 |---------------------------------------|:---------------:|:-----------:|
 | highlight_view_highlightColor         | reference/color |  高亮中心区域颜色   |
-| highlight_view_duration               |     integer     |    动画时间     |
-| highlight_view_repeatCount            |     integer     |   动画循环时间    |
 | highlight_view_highlightWidth         |    dimension    |   高亮区域宽度    |
 | highlight_view_highlightRotateDegrees |      float      |  高亮区域旋转角度   |
-| highlight_view_repeatMode             |      enum       |   动画循环模式    |
 | highlight_view_startDirection         |      enum       |  高亮动画开始位置   |
+| highlight_view_repeatCount            |     integer     |   动画循环时间    |
+| highlight_view_repeatMode             |      enum       |   动画循环模式    |
+| highlight_view_duration               |     integer     |    动画时间     |
 | highlight_view_autoStart              |     boolean     | 是否自动开始高亮动画  |
 
 ### HighlightAnimHolder 部分方法介绍
 
-| attr                  |   description   |
-|-----------------------|:---------------:|
-| startHighlightEffect  |      开始动画       |
-| stopHighlightEffect   |      结束动画       |
-| addLifecycleObserver  | 添加生命周期感知，自动暂停结束 |
-| resumeHighlightEffect |      继续动画       |
-| pauseHighlightEffect  |      暂停动画       |
-| isPaused              |     是否暂停动画      |
-| setInterpolator       |      设置插值器      |
+| attr                  |     description     |
+|-----------------------|:-------------------:|
+| startHighlightEffect  | 开始动画(动画相关参数设置后在此起效) |
+| stopHighlightEffect   |        结束动画         |
+| addLifecycleObserver  |   添加生命周期感知，自动暂停结束   |
+| resumeHighlightEffect |        继续动画         |
+| pauseHighlightEffect  |        暂停动画         |
+| isPaused              |       是否暂停动画        |
+| setInterpolator       |        设置插值器        |
 
 **例如**
 

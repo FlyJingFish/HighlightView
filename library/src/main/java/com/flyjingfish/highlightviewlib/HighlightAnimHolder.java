@@ -4,11 +4,13 @@ import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
@@ -40,21 +42,22 @@ public class HighlightAnimHolder {
         this.mHighlightDrawView = highlightDrawView;
         this.mHighlightView = highlightView;
         if (highlightView.thisView() != null) {
-            Context context = highlightView.thisView().getContext();
-            if (context instanceof LifecycleOwner) {
-                ((LifecycleOwner) context).getLifecycle().addObserver(new LifecycleEventObserver() {
-                    @Override
-                    public void onStateChanged(@NonNull LifecycleOwner source, @NonNull Lifecycle.Event event) {
-                        if (mHighlightEffectAnim == null) {
-                            return;
-                        }
-                        if (event == Lifecycle.Event.ON_DESTROY) {
-                            mHighlightEffectAnim.removeAllListeners();
-                            mHighlightEffectAnim.cancel();
-                        }
+            highlightView.thisView().addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+                @Override
+                public void onViewAttachedToWindow(View v) {
+                    if (mHighlightEffectAnim != null && !mHighlightEffectAnim.isStarted()){
+                        mHighlightEffectAnim.start();
                     }
-                });
-            }
+                }
+
+                @Override
+                public void onViewDetachedFromWindow(View v) {
+                    if (mHighlightEffectAnim != null){
+                        mHighlightEffectAnim.removeAllListeners();
+                        mHighlightEffectAnim.cancel();
+                    }
+                }
+            });
         }
     }
 
@@ -70,6 +73,9 @@ public class HighlightAnimHolder {
 
     public void addLifecycleObserver(LifecycleOwner owner) {
         if (owner != null) {
+            if (owner instanceof Fragment){
+                owner = ((Fragment) owner).getViewLifecycleOwner();
+            }
             owner.getLifecycle().removeObserver(mLifecycleEventObserver);
             owner.getLifecycle().addObserver(mLifecycleEventObserver);
         }
@@ -81,13 +87,10 @@ public class HighlightAnimHolder {
             if (mHighlightEffectAnim == null) {
                 return;
             }
-            if (event == Lifecycle.Event.ON_START) {
+            if (event == Lifecycle.Event.ON_START && mHighlightEffectAnim.isPaused()) {
                 mHighlightEffectAnim.resume();
-            } else if (event == Lifecycle.Event.ON_STOP) {
+            } else if (event == Lifecycle.Event.ON_STOP && mHighlightEffectAnim.isRunning()) {
                 mHighlightEffectAnim.pause();
-            } else if (event == Lifecycle.Event.ON_DESTROY) {
-                mHighlightEffectAnim.removeAllListeners();
-                mHighlightEffectAnim.cancel();
             }
         }
     };

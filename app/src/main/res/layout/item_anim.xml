@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.flyjingfish.highlightviewlib.HighlightLinearLayout
+        android:id="@+id/highlightLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        app:highlight_view_highlightWidth="40dp"
+        app:highlight_view_highlightColor="#E6ffffff"
+        app:highlight_view_autoStart="true"
+        app:highlight_view_duration="6500"
+        app:highlight_view_repeatCount="-1"
+        app:highlight_view_repeatMode="restart"
+        app:highlight_view_highlightRotateDegrees="30"
+        app:highlight_view_startDirection="from_left">
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/camera"
+            android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="视频连接中"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+    </com.flyjingfish.highlightviewlib.HighlightLinearLayout>
+</FrameLayout>

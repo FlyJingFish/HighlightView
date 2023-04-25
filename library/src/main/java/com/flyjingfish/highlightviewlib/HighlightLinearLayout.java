@@ -15,12 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class HighlightLinearLayout extends LinearLayout implements HighlightView, HighlightDrawView, AnimHolder {
-    private final HighlightAnimHolder  mHighlightAnimHolder = new HighlightAnimHolder(this, this);
+    private final HighlightAnimHolder mHighlightAnimHolder = new HighlightAnimHolder(this, this);
     private final HighlightDraw mHighlightDraw = new HighlightDraw(this);
     private final Paint mImagePaint = InitAttrs.initPaint();
 
     private final RectF mRectF = new RectF();
     private final PorterDuffXfermode mSrcInXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
+
     public HighlightLinearLayout(@NonNull Context context) {
         this(context, null);
     }
