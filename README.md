@@ -24,7 +24,7 @@
 
 ```gradle
     dependencies {
-        implementation 'com.github.FlyJingFish:HighlightView:1.1.8'
+        implementation 'com.github.FlyJingFish:HighlightView:1.1.9'
     }
 ```
 ## 第三步，使用说明
@@ -128,7 +128,6 @@
 |-----------------------|:-------------------:|
 | startHighlightEffect  | 开始动画(动画相关参数设置后在此起效) |
 | stopHighlightEffect   |        结束动画         |
-| addLifecycleObserver  |   添加生命周期感知，自动暂停结束   |
 | resumeHighlightEffect |        继续动画         |
 | pauseHighlightEffect  |        暂停动画         |
 | isPaused              |       是否暂停动画        |

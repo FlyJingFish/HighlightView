@@ -2,6 +2,7 @@ package com.flyjingfish.highlightview;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
                 isRemove = !isRemove;
             }
         });
+//        R.id.view_tree_lifecycle_owner；
+//        highlightImageView.getTag()
         highlightTextView.getHighlightAnimHolder().addLifecycleObserver(this);
         highlightLinearLayout.getHighlightAnimHolder().addLifecycleObserver(this);
 //        highlightTextView.getHighlightAnimHolder().setHighlightColor(Color.BLUE);

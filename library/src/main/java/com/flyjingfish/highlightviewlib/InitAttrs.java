@@ -3,6 +3,7 @@ package com.flyjingfish.highlightviewlib;
 import static com.flyjingfish.highlightviewlib.HighlightAnimHolder.FROM_LEFT;
 import static com.flyjingfish.highlightviewlib.HighlightAnimHolder.RESTART;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -10,9 +11,14 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.savedstate.SavedStateRegistryOwner;
 
 class InitAttrs {
     static void init(@NonNull Context context, @Nullable AttributeSet attrs, @NonNull HighlightAnimHolder highlightAnimHolder) {
@@ -48,5 +54,28 @@ class InitAttrs {
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
         return paint;
+    }
+
+    static EnsureFragmentX ensureInFragmentX(@Nullable View view) {
+        if (view == null) {
+            return new EnsureFragmentX(null,false);
+        } else if (view.getParent() instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view.getParent();
+            if (isInFragment(viewGroup)) {
+                Object object1 = viewGroup.getTag(R.id.view_tree_lifecycle_owner);
+                return new EnsureFragmentX((LifecycleOwner) object1,true);
+            } else {
+                return ensureInFragmentX(viewGroup);
+            }
+        } else {
+            return new EnsureFragmentX(null,false);
+        }
+    }
+
+    private static boolean isInFragment(View view){
+        Object object1 = view.getTag(R.id.view_tree_lifecycle_owner);
+        Object object2 = view.getTag(R.id.view_tree_view_model_store_owner);
+        Object object3 = view.getTag(R.id.view_tree_saved_state_registry_owner);
+        return object1 instanceof LifecycleOwner && object2 instanceof ViewModelStoreOwner && object3 instanceof SavedStateRegistryOwner && !(object1 instanceof Activity);
     }
 }

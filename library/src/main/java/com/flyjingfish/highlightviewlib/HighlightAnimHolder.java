@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
@@ -38,7 +39,7 @@ public class HighlightAnimHolder {
 
     private float mHighlightRotateDegrees = 0;
 
-    public HighlightAnimHolder(HighlightDrawView highlightDrawView, HighlightView highlightView) {
+    public HighlightAnimHolder(final HighlightDrawView highlightDrawView, final HighlightView highlightView) {
         this.mHighlightDrawView = highlightDrawView;
         this.mHighlightView = highlightView;
         if (highlightView.thisView() != null) {
@@ -58,6 +59,24 @@ public class HighlightAnimHolder {
                     }
                 }
             });
+
+            highlightView.thisView().addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+                @Override
+                public void onViewAttachedToWindow(View v) {
+                    highlightView.thisView().removeOnAttachStateChangeListener(this);
+                    EnsureFragmentX ensureFragmentX = InitAttrs.ensureInFragmentX(highlightView.thisView());
+                    if (ensureFragmentX.isInFragmentX){
+                        addObserver(ensureFragmentX.lifecycleOwner);
+                    }else if (highlightView.thisView().getContext() instanceof LifecycleOwner){
+                        addObserver((LifecycleOwner) highlightView.thisView().getContext());
+                    }
+                }
+
+                @Override
+                public void onViewDetachedFromWindow(View v) {
+                    highlightView.thisView().removeOnAttachStateChangeListener(this);
+                }
+            });
         }
     }
 
@@ -71,7 +90,16 @@ public class HighlightAnimHolder {
     public @interface StartDirection {
     }
 
+    /**
+     * 此方法已被弃用，不用调用也可以，内部已经调用过了
+     * @param owner
+     */
+    @Deprecated
     public void addLifecycleObserver(LifecycleOwner owner) {
+        addObserver(owner);
+    }
+
+    private void addObserver(LifecycleOwner owner) {
         if (owner != null) {
             if (owner instanceof Fragment){
                 owner = ((Fragment) owner).getViewLifecycleOwner();
@@ -91,6 +119,8 @@ public class HighlightAnimHolder {
                 mHighlightEffectAnim.resume();
             } else if (event == Lifecycle.Event.ON_STOP && mHighlightEffectAnim.isRunning()) {
                 mHighlightEffectAnim.pause();
+            }else if (event == Lifecycle.Event.ON_DESTROY) {
+                mHighlightEffectAnim.cancel();
             }
         }
     };
@@ -107,6 +137,10 @@ public class HighlightAnimHolder {
         return mHighlightDrawView.getHighlightDraw().setStartHighlightOffset();
     }
 
+    /**
+     * 这个可以设置高亮部分位移量，如果动画在运动中不建议调用这个方法
+     * @param startHighlightOffset 高亮部分位移量
+     */
     public void setStartHighlightOffset(float startHighlightOffset) {
         mHighlightDrawView.getHighlightDraw().setStartHighlightOffset(startHighlightOffset);
         mHighlightView.thisView().invalidate();
