@@ -16,7 +16,6 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 public class HighlightTextView extends AppCompatTextView implements HighlightView, HighlightDrawView, AnimHolder {
     private final HighlightAnimHolder mHighlightAnimHolder = new HighlightAnimHolder(this, this);
-    ;
     private final RectF mRectF = new RectF();
     private final PorterDuffXfermode mSrcInXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
     private final HighlightDraw mHighlightDraw = new HighlightDraw(this);

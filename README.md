@@ -111,18 +111,18 @@
 
 ### 属性一览
 
-| attr                                  |     format      | description |
-|---------------------------------------|:---------------:|:-----------:|
-| highlight_view_highlightColor         | reference/color |  高亮中心区域颜色   |
-| highlight_view_highlightWidth         |    dimension    |   高亮区域宽度    |
-| highlight_view_highlightRotateDegrees |      float      |  高亮区域旋转角度   |
-| highlight_view_startDirection         |      enum       |  高亮动画开始位置   |
-| highlight_view_repeatCount            |     integer     |   动画循环时间    |
-| highlight_view_repeatMode             |      enum       |   动画循环模式    |
-| highlight_view_duration               |     integer     |    动画时间     |
-| highlight_view_autoStart              |     boolean     | 是否自动开始高亮动画  |
+| attr                                  |     format      |                                 description                                 |
+|---------------------------------------|:---------------:|:---------------------------------------------------------------------------:|
+| highlight_view_highlightColor         | reference/color |                                  高亮中心区域颜色                                   |
+| highlight_view_highlightWidth         |    dimension    |                                   高亮区域宽度                                    |
+| highlight_view_highlightRotateDegrees |      float      |                                  高亮区域旋转角度                                   |
+| highlight_view_startDirection         |      enum       | 高亮动画开始位置（from_left 从左边开始/from_top 从上边开始/from_right 从右边开始/from_bottom 从下边开始） |
+| highlight_view_repeatCount            |     integer     |                                   动画循环次数                                    |
+| highlight_view_repeatMode             |      enum       |           动画循环模式（restart 动画结束后从开始位置循环下一次/reverse 动画结束后从结束位置循环下一次）           |
+| highlight_view_duration               |     integer     |                                  动画循环一次的时间                                  |
+| highlight_view_autoStart              |     boolean     |                                 是否自动开始高亮动画                                  |
 
-### HighlightAnimHolder 部分方法介绍
+### HighlightAnimHolder 部分方法介绍(更多方法自行探索吧～～)
 
 | attr                  |     description     |
 |-----------------------|:-------------------:|
