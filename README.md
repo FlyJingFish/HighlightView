@@ -120,7 +120,7 @@
 | highlight_view_repeatCount            |     integer     |                                   动画循环次数                                    |
 | highlight_view_repeatMode             |      enum       |           动画循环模式（restart 动画结束后从开始位置循环下一次/reverse 动画结束后从结束位置循环下一次）           |
 | highlight_view_duration               |     integer     |                                  动画循环一次的时间                                  |
-| highlight_view_autoStart              |     boolean     |                                 是否自动开始高亮动画                                  |
+| highlight_view_autoStart              |     boolean     |                             开始显示控件时，是否自动开始高亮动画                              |
 
 ### HighlightAnimHolder 部分方法介绍(更多方法自行探索吧～～)
 
