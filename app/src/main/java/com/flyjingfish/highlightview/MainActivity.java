@@ -34,11 +34,11 @@ public class MainActivity extends AppCompatActivity {
         highlightLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (highlightLinearLayout.getHighlightAnimHolder().isPaused()){
-                    highlightLinearLayout.getHighlightAnimHolder().resumeHighlightEffect();
-                }else {
-                    highlightLinearLayout.getHighlightAnimHolder().pauseHighlightEffect();
-                }
+//                if (highlightLinearLayout.getHighlightAnimHolder().isPaused()){
+//                    highlightLinearLayout.getHighlightAnimHolder().resumeHighlightEffect();
+//                }else {
+//                    highlightLinearLayout.getHighlightAnimHolder().pauseHighlightEffect();
+//                }
             }
         });
         highlightImageView.setOnClickListener(new View.OnClickListener() {

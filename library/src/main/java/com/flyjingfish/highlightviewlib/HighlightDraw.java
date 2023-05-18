@@ -5,6 +5,7 @@ import static com.flyjingfish.highlightviewlib.HighlightAnimHolder.FROM_LEFT;
 import static com.flyjingfish.highlightviewlib.HighlightAnimHolder.FROM_TOP;
 
 import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
@@ -16,6 +17,9 @@ import android.graphics.Shader;
 
 import androidx.annotation.ColorInt;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class HighlightDraw {
 
     private final RectF mRectF = new RectF();
@@ -26,7 +30,8 @@ class HighlightDraw {
     private float mHighlightWidth = 0;
     private final Paint mImagePaint = InitAttrs.initPaint();
     private float mHighlightRotateDegrees = 0;
-    private int mHighlightColor;
+    private ColorStateList mHighlightColor;
+    private int mCurHighlightColor;
     private int mStartDirection = FROM_LEFT;
     private final HighlightDrawView mHighlightDrawView;
 
@@ -103,21 +108,45 @@ class HighlightDraw {
 
     @ColorInt
     protected int getHighlightColor() {
+        return mCurHighlightColor;
+    }
+
+    protected ColorStateList getHighlightColors() {
         return mHighlightColor;
     }
 
-    protected void setHighlightColor(@ColorInt int highlightColor) {
+    protected void setHighlightColor(ColorStateList highlightColor) {
         this.mHighlightColor = highlightColor;
+        setGradientColors();
+    }
 
-        float[] resourceColorHsv = new float[3];
-        Color.colorToHSV(highlightColor, resourceColorHsv);
+    protected void setHighlightColor(@ColorInt int highlightColor) {
+        setHighlightColor(ColorStateList.valueOf(highlightColor));
+    }
 
-        int mHighlightEndColor = Color.HSVToColor(1, resourceColorHsv);
+    void setGradientColors(){
+        if (mHighlightColor == null){
+            return;
+        }
+        boolean inval = false;
+        final int[] drawableState = mHighlightDrawView.thisView().getDrawableState();
+        int highlightColor = mHighlightColor.getColorForState(drawableState, 0);
+        if (highlightColor != mCurHighlightColor) {
+            mCurHighlightColor = highlightColor;
+            float[] resourceColorHsv = new float[3];
+            Color.colorToHSV(highlightColor, resourceColorHsv);
 
-        mGradientColors[0] = mHighlightEndColor;
-        mGradientColors[1] = mHighlightColor;
-        mGradientColors[2] = mHighlightColor;
-        mGradientColors[3] = mHighlightEndColor;
+            int mHighlightEndColor = Color.HSVToColor(1, resourceColorHsv);
+
+            mGradientColors[0] = mHighlightEndColor;
+            mGradientColors[1] = highlightColor;
+            mGradientColors[2] = highlightColor;
+            mGradientColors[3] = mHighlightEndColor;
+            inval = true;
+        }
+        if (inval){
+            mHighlightDrawView.thisView().invalidate();
+        }
     }
 
     protected int getStartDirection() {

@@ -75,4 +75,10 @@ public class HighlightFrameLayout extends FrameLayout implements HighlightView, 
     public HighlightDraw getHighlightDraw() {
         return mHighlightDraw;
     }
+
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        mHighlightAnimHolder.drawableStateChanged();
+    }
 }

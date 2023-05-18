@@ -56,4 +56,10 @@ public class HighlightImageView extends AppCompatImageView implements HighlightV
         super.onLayout(changed, left, top, right, bottom);
         mHighlightAnimHolder.onLayout(changed, left, top, right, bottom);
     }
+
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        mHighlightAnimHolder.drawableStateChanged();
+    }
 }

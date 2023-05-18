@@ -5,6 +5,7 @@ import static com.flyjingfish.highlightviewlib.HighlightAnimHolder.RESTART;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -23,7 +24,7 @@ import androidx.savedstate.SavedStateRegistryOwner;
 class InitAttrs {
     static void init(@NonNull Context context, @Nullable AttributeSet attrs, @NonNull HighlightAnimHolder highlightAnimHolder) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HighlightAnimView);
-        int highlightColor = a.getColor(R.styleable.HighlightAnimView_highlight_view_highlightColor, Color.WHITE);
+        ColorStateList highlightColor = a.getColorStateList(R.styleable.HighlightAnimView_highlight_view_highlightColor);
         long duration = a.getInteger(R.styleable.HighlightAnimView_highlight_view_duration, 1000);
         int repeatCount = a.getInteger(R.styleable.HighlightAnimView_highlight_view_repeatCount, 0);
         int repeatMode = a.getInt(R.styleable.HighlightAnimView_highlight_view_repeatMode, RESTART);
@@ -32,7 +33,9 @@ class InitAttrs {
         int startDirection = a.getColor(R.styleable.HighlightAnimView_highlight_view_startDirection, FROM_LEFT);
         boolean autoStart = a.getBoolean(R.styleable.HighlightAnimView_highlight_view_autoStart, false);
         a.recycle();
-
+        if (highlightColor == null){
+            highlightColor = ColorStateList.valueOf(Color.WHITE);
+        }
 
         highlightAnimHolder.setDuration(duration);
         highlightAnimHolder.setRepeatCount(repeatCount);

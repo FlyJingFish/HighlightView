@@ -75,4 +75,10 @@ public class HighlightRelativeLayout extends RelativeLayout implements Highlight
     public HighlightDraw getHighlightDraw() {
         return mHighlightDraw;
     }
+
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        mHighlightAnimHolder.drawableStateChanged();
+    }
 }

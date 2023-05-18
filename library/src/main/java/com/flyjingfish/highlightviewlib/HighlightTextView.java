@@ -75,4 +75,9 @@ public class HighlightTextView extends AppCompatTextView implements HighlightVie
         mHighlightAnimHolder.onLayout(changed, left, top, right, bottom);
     }
 
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        mHighlightAnimHolder.drawableStateChanged();
+    }
 }

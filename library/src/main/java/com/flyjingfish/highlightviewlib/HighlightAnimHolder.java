@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
@@ -326,7 +327,15 @@ public class HighlightAnimHolder {
         return mHighlightDrawView.getHighlightDraw().getHighlightColor();
     }
 
+    protected ColorStateList getHighlightColors() {
+        return mHighlightDrawView.getHighlightDraw().getHighlightColors();
+    }
+
     public void setHighlightColor(@ColorInt int highlightColor) {
+        mHighlightDrawView.getHighlightDraw().setHighlightColor(highlightColor);
+    }
+
+    public void setHighlightColor(ColorStateList highlightColor) {
         mHighlightDrawView.getHighlightDraw().setHighlightColor(highlightColor);
     }
 
@@ -351,5 +360,9 @@ public class HighlightAnimHolder {
         if (isStartBeforeLayout()) {
             startAnim();
         }
+    }
+
+    protected void drawableStateChanged() {
+        mHighlightDrawView.getHighlightDraw().setGradientColors();
     }
 }

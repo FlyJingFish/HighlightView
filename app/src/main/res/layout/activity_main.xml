@@ -55,7 +55,7 @@
         android:gravity="center"
         android:layout_marginTop="10dp"
         app:highlight_view_highlightWidth="40dp"
-        app:highlight_view_highlightColor="#E6ffffff"
+        app:highlight_view_highlightColor="@color/press"
         app:highlight_view_autoStart="true"
         app:highlight_view_duration="2500"
         app:highlight_view_repeatCount="-1"

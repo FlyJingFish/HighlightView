@@ -74,4 +74,10 @@ public class HighlightLinearLayout extends LinearLayout implements HighlightView
     public HighlightDraw getHighlightDraw() {
         return mHighlightDraw;
     }
+
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        mHighlightAnimHolder.drawableStateChanged();
+    }
 }
