@@ -327,7 +327,7 @@ public class HighlightAnimHolder {
         return mHighlightDrawView.getHighlightDraw().getHighlightColor();
     }
 
-    protected ColorStateList getHighlightColors() {
+    public ColorStateList getHighlightColors() {
         return mHighlightDrawView.getHighlightDraw().getHighlightColors();
     }
 
