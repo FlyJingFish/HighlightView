@@ -1,5 +1,6 @@
 package com.flyjingfish.highlightviewlib;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
@@ -187,6 +188,23 @@ public class HighlightAnimHolder {
         return true;
     }
 
+    public void addListener(Animator.AnimatorListener listener) {
+        if (mHighlightEffectAnim != null){
+            mHighlightEffectAnim.addListener(listener);
+        }
+    }
+
+    public void addUpdateListener(ValueAnimator.AnimatorUpdateListener listener) {
+        if (mHighlightEffectAnim != null){
+            mHighlightEffectAnim.addUpdateListener(listener);
+        }
+    }
+
+    public void addPauseListener(Animator.AnimatorPauseListener listener) {
+        if (mHighlightEffectAnim != null){
+            mHighlightEffectAnim.addPauseListener(listener);
+        }
+    }
 
     protected void startAnim() {
         if (mHighlightEffectAnim == null) {
