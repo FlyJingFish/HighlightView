@@ -24,7 +24,7 @@
 
 ```gradle
     dependencies {
-        implementation 'com.github.FlyJingFish:HighlightView:1.2.0'
+        implementation 'com.github.FlyJingFish:HighlightView:1.2.1'
     }
 ```
 ## 第三步，使用说明
